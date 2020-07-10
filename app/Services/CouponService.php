@@ -17,4 +17,22 @@ class CouponService
         return $this->couponRepository->getAll($orderBy,$limit);
     }
 
+    public function create($request, $id =null)
+    {
+        return $this->couponRepository->create($request, $id);
+    }
+
+
+    public function find($id)
+    {
+        return $this->couponRepository->find($id);
+    }
+
+    public function delete($id)
+    {
+        return $this->couponRepository->delete($id);
+    }
+
+
+
 }

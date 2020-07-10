@@ -17,4 +17,4 @@ use Illuminate\Support\Facades\Route;
 //    return view('welcome');
 //});
 
-Route::match(['get','post'],'/','IndexController@index');
+Route::match(['get','post'],'admin','IndexController@index');

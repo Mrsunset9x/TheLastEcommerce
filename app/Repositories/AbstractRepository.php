@@ -43,7 +43,6 @@ abstract class AbstractRepository implements BaseRepository
 
         return $this->_model->all();
     }
-
     /**
      * Get one
      * @param $id
@@ -51,7 +50,7 @@ abstract class AbstractRepository implements BaseRepository
      */
     public function find($id)
     {
-        $result = $this->_model->find($id);
+        $result = $this->_model->findOrFail($id);
 
         return $result;
     }
@@ -93,14 +92,9 @@ abstract class AbstractRepository implements BaseRepository
     public function delete($id)
     {
         $result = $this->find($id);
-        if ($result) {
-            $result->delete();
-
-            return true;
-        }
-
-        return false;
+       return $result->destroy($id);
     }
+
 }
 
 

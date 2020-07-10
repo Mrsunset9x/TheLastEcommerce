@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Services\CouponService;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 
 class CouponController extends Controller
 {
@@ -23,10 +25,92 @@ class CouponController extends Controller
                 $orderBys['column'] = $request->get('column');
                 $orderBys['sort'] = $request->get('sort');
             }
-            $category = $this->couponService->getAll($orderBys,$limit);
+            $coupon = $this->couponService->getAll($orderBys,$limit);
+            return response()->json([
+                'status'    => true,
+                'coupon'    =>$coupon
+            ]);
+        }catch (\Exception $e)
+        {
+            return response()->json([
+                'errors' =>
+                    [
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => $e->getMessage(),
+                    ]
+            ]);
+        }
+    }
+
+    public function store(Request $request)
+    {
+        try {
+            $coupon =  $this->couponService->create($request->all());
+            return response()->json([
+                'status'  => true,
+                'coupon'  => $coupon,
+            ]);
+        }catch (\Exception $e)
+        {
+            return response()->json([
+                'status'    =>false,
+                'code'      => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'message'   => $e->getMessage()
+            ]);
+        }
+    }
+
+
+    public function show($id)
+    {
+        try {
+            $category = $this->couponService->find($id);
             return response()->json([
                 'status'    => true,
                 'category'    =>$category
+            ]);
+        }catch (\Exception $e)
+        {
+            return response()->json([
+                'errors' =>
+                    [
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => $e->getMessage(),
+                    ]
+            ]);
+        }
+    }
+
+    public function update(Request $request , $id)
+    {
+        try {
+            $category = $this->couponService->create($request, $id);
+            return response()->json([
+                'status'    => true,
+                'category'    =>$category
+            ]);
+        }catch (\Exception $e)
+        {
+            return response()->json([
+                'errors' =>
+                    [
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => $e->getMessage(),
+                    ]
+            ]);
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $this->couponService->delete($id);
+            return response()->json([
+                'status'    => true,
+                'code'   => Response::HTTP_OK,
             ]);
         }catch (\Exception $e)
         {

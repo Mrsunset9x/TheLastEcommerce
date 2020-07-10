@@ -37,13 +37,4 @@ class CategoryRepository extends AbstractRepository
         );
     }
 
-    public function find($id)
-    {
-        return Category::find($id);
-    }
-
-    public function delete($id)
-    {
-        return Category::destroy($id);
-    }
 }

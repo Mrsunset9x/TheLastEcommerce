@@ -41,16 +41,6 @@ class BannerRepository extends AbstractRepository implements IBannerRepository
         return $query->where('status', 1)->paginate($limit);
     }
 
-    public function find($id)
-    {
-        return Banner::findOrFail($id);
-    }
-
-    public function delete($id)
-    {
-        return Banner::destroy($id);
-    }
-
     public function update($id, array $attributes)
     {
         return Banner::where('id',$id)->update([
