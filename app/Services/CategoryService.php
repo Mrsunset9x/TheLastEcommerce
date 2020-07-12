@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
-use App\Repositories\CategoryRepository;
+use App\Repositories\Contracts\ICategoryRepository;
 
 class CategoryService
 {
     protected $categoryRepository;
-    public function __construct(CategoryRepository $categoryRepository)
+    public function __construct(ICategoryRepository $categoryRepository)
     {
         $this->categoryRepository = $categoryRepository;
     }

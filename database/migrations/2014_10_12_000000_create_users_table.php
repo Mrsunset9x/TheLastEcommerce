@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->string('social_id')->nullable();
             $table->string('address');
-            $table->string('phone');
+            $table->string('phone')->unique();
             $table->tinyInteger('level')->default(0);
             $table->tinyInteger('status')->default(0);
             $table->timestamp('email_verified_at')->nullable();

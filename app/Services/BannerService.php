@@ -3,7 +3,7 @@
 namespace App\Services;
 
 
-use App\Repositories\BannerRepository;
+use App\Repositories\Contracts\IBannerRepository;
 use Intervention\Image\Facades\Image;
 
 class BannerService
@@ -11,7 +11,7 @@ class BannerService
     protected $bannerRepository;
     protected $imageService;
 
-    public function __construct(BannerRepository $bannerRepository ,  ImageService $imageService)
+    public function __construct(IBannerRepository $bannerRepository ,  ImageService $imageService)
     {
         $this->bannerRepository = $bannerRepository;
         $this->imageService     = $imageService;

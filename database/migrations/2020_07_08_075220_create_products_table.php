@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('sku');
             $table->string('color');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->float('price');
             $table->string('image');
             $table->tinyInteger('status');

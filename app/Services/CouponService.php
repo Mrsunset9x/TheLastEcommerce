@@ -2,12 +2,13 @@
 
 namespace App\Services;
 
+use App\Repositories\Contracts\ICouponRepository;
 use App\Repositories\CouponRepository;
 
 class CouponService
 {
     protected $couponRepository;
-    public function __construct(CouponRepository $couponRepository)
+    public function __construct(ICouponRepository $couponRepository)
     {
         $this->couponRepository = $couponRepository;
     }

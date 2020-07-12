@@ -3,8 +3,7 @@
 namespace App\Repositories;
 use App\Models\Banner;
 use App\Repositories\Contracts\IBannerRepository;
-use GuzzleHttp\Psr7\Request;
-use Intervention\Image\Facades\Image;
+
 
 
 class BannerRepository extends AbstractRepository implements IBannerRepository

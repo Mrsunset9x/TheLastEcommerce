@@ -31,6 +31,9 @@ Route::namespace('api')->prefix('v1')->group(function(){
         Route::resource('banner','BannerController')->except('create','edit');
         Route::resource('category','CategoryController')->except('create','edit');
         Route::resource('coupon','CouponController')->except('create','edit');
+        Route::post('product/{id}','ProductController@update');
+        Route::resource('product','ProductController')->except('create','edit');
+        Route::post('addimg/{id}','ProductController@addMoreImgToProduct');
     });
 
     Route::post('login', 'AuthController@login');
