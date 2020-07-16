@@ -13,8 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
+Route::get('/', function () {
+   return view('home.index');
+});
 
-Route::match(['get','post'],'admin','IndexController@index');
+Route::get('/admin','Api\AdminController@login');
+Route::post('/postLogin','Api\AdminController@postLogin');
+
+Route::get('/adminapi', function(){
+    return view('admin.index');
+});
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
