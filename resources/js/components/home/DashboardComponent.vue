@@ -107,28 +107,29 @@
             // get count Product
             axios.get(`http://127.0.0.1:8000/api/v1/product?limit=10&page=1&column=id&sort=asc`)
                 .then((res)=> {
-                    if(res.status === 200){
-                     this.countProduct = res.data.product.total;
-                    }
+                    console.log(res);
+                    // if(res.status === 200){
+                    //  this.countProduct = res.data.product.total;
+                    // }
                 }).catch((errors)=>{
                 console.log(errors);
             });
-            axios.get(`http://127.0.0.1:8000/api/v1/category?limit=10&page=1&column=id&sort=asc`)
-                .then((res)=> {
-                    if(res.status === 200){
-                        this.countCate = res.data.category.total;
-                    }
-                }).catch((errors)=>{
-                console.log(errors);
-            });
-            axios.get(`http://127.0.0.1:8000/api/v1/order?limit=10&page=1&column=id&sort=asc`)
-                .then((res)=> {
-                    if(res.status === 200){
-                        this.countBill = res.data.order.total;
-                    }
-                }).catch((errors)=>{
-                console.log(errors);
-            })
+            // axios.get(`http://127.0.0.1:8000/api/v1/category?limit=10&page=1&column=id&sort=asc`)
+            //     .then((res)=> {
+            //         if(res.status === 200){
+            //             this.countCate = res.data.category.total;
+            //         }
+            //     }).catch((errors)=>{
+            //     console.log(errors);
+            // });
+            // axios.get(`http://127.0.0.1:8000/api/v1/order?limit=10&page=1&column=id&sort=asc`)
+            //     .then((res)=> {
+            //         if(res.status === 200){
+            //             this.countBill = res.data.order.total;
+            //         }
+            //     }).catch((errors)=>{
+            //     console.log(errors);
+            // })
 
         },
         methods:{

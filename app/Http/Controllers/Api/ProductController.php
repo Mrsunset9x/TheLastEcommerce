@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -63,7 +64,7 @@ class ProductController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         try {
             $product = $this->productService->store($request->all());
@@ -83,7 +84,7 @@ class ProductController extends Controller
         }
     }
 
-    public function update($id, Request $request)
+    public function update(Request $request, $id)
     {
         try {
             $product = $this->productService->update($request->all() ,$id);
@@ -106,10 +107,11 @@ class ProductController extends Controller
     public function destroy($id)
     {
         try {
-            $this->productService->delete($id);
+            $product = $this->productService->delete($id);
             return response()->json([
                 'status' => true,
                 'code' => Response::HTTP_OK,
+                'product' => $product
             ]);
         } catch (\Exception $e) {
             return response()->json([

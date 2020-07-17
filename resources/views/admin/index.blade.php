@@ -18,7 +18,6 @@
     </head>
 
     <body>
-
         <div id="app">
                 <router-view name="HomeComponent"></router-view>
           </div>

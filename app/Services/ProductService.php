@@ -4,18 +4,16 @@ namespace App\Services;
 
 use App\Models\Product;
 use App\Repositories\Contracts\IProductRepository;
-use Intervention\Image\Facades\Image;
-use App\Repositories\ImageRepository;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use Mockery\Exception;
-use Symfony\Component\HttpFoundation\Response;
-
+use Intervention\Image\Facades\Image;
+use App\Repositories\Contracts\IImageRepository;
 class ProductService
 {
     protected $productRepository;
     protected $imageRepository;
 
-    public function __construct(IProductRepository $productRepository, ImageRepository $imageRepository)
+    public function __construct(IProductRepository $productRepository , IImageRepository $imageRepository)
     {
         $this->productRepository = $productRepository;
         $this->imageRepository = $imageRepository;
@@ -41,51 +39,57 @@ class ProductService
         return $this->productRepository->create($request);
     }
 
-    public function update($id, $request)
+    public function update($request,$id)
     {
-        if(!empty($request['image'])){
+        if (!empty($request['image'])) {
             $products = $this->productRepository->find($id);
-            foreach ($products as $product)
-            {
+            foreach ($products as $product) {
                 $image_path = "/uploads/products/avatar/" . $product->image;
                 if (file_exists(public_path($image_path))) {
-
                     unlink(public_path($image_path));
                 }
             }
+            $image_tmp = $request['image'];
+            if ($image_tmp->isValid()) {
+                // Upload Images after Resize
+                $extension = $image_tmp->getClientOriginalExtension();
+                $request['image'] = $fileName = rand(111, 99999) . '.' . $extension;
+                $banner_path = 'uploads/products/avatar/' . $fileName;
+                Image::make($image_tmp)->resize(500, 500)->save($banner_path);
+            }
         }
-        return $this->productRepository->create($request,$id);
+        return $this->productRepository->create($request, $id);
     }
-
-
 
     public function show($id)
     {
         return $this->productRepository->find($id);
-
     }
-
 
     public function delete($id)
     {
         try {
             DB::beginTransaction();
             $product = $this->productRepository->find($id);
-            $image_path = "/uploads/products/avatar/" . $product->image;
-            if (file_exists(public_path($image_path))) {
-
-                unlink(public_path($image_path));
-            }
-            foreach ($product->images as $img) {
-                $image_path = "/uploads/products/" . $img->name;
+            foreach ($product as $prd)
+            {
+                $image_path = "/uploads/products/avatar/" . $prd->image;
                 if (file_exists(public_path($image_path))) {
                     unlink(public_path($image_path));
                 }
-                $this->imageRepository->delete($img->id);
+            }
+            foreach ($product as $img) {
+               foreach ($img->images as $nameImg) {
+                   $image_path = "/uploads/products/" . $nameImg->name;
+                   if (file_exists(public_path($image_path))) {
+                       unlink(public_path($image_path));
+                   }
+                   $this->imageRepository->delete($nameImg->id);
+               }
             }
             DB::commit();
             return $this->productRepository->delete($id);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
                 'errors' =>
@@ -98,7 +102,6 @@ class ProductService
         }
     }
 
-
     public function addImg($request, $id)
     {
         $product = Product::find($id);
@@ -109,9 +112,9 @@ class ProductService
             $image['name'] = $fileName = rand(111, 99999) . '.' . $extension;
             $banner_path = 'uploads/products/' . $fileName;
             Image::make($img)->resize(500, 500)->save($banner_path);
-            $this->imageRepository->addImg($image);
+            $this->imageRepository->create($image);
         }
-        return $product->with('images')->get();
+        return $this->productRepository->showProductWithImg($id);
     }
 
 

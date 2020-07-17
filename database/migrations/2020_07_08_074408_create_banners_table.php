@@ -20,7 +20,7 @@ class CreateBannersTable extends Migration
             $table->integer('sort_order');
             $table->string('content');
             $table->string('link');
-            $table->tinyInteger('status');
+            $table->tinyInteger('status')->default(0);
             $table->string('images');
             $table->timestamps();
         });

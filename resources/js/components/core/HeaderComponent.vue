@@ -18,7 +18,7 @@
                 </div>
                 <div class="top-menu d-flex align-items-center">
                     <div class="dropdown">
-                        <a @click="handleClick" class="dropdown-toggle" role="button"><img style="width:40px;height:40px;right:50px"  class="avatar" src="/img/admin/user.jpg" alt=""></a>
+                        <a @click="handleClick" class="dropdown-toggle" role="button"><img style="width:40px;height:40px;right:50px"  class="avatar" src="/img/admin/pnt.jpg" alt=""></a>
                         <div v-if="isDisplayDropdown" style="display:block" class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                             <a class="dropdown-item" href="/admin"><i class="ik ik-power dropdown-icon"></i>Đăng xuất</a>
                         </div>

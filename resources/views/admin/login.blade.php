@@ -56,7 +56,7 @@
                         </div>
                         <div class="form-group">
                           <label  class="font-weight-bold" for="exampleInputPassword1">Password</label>
-                          <input id="psw" name="psw" type="password" class="form-control">
+                          <input id="psw" name="password" type="password" class="form-control">
                         </div>
                         <button id="login" type="submit" class="btn btn-primary">Submit</button>
                     </form>
@@ -64,6 +64,8 @@
             </div>
         </div>
     </div>
+    <script >
+    </script>
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="/js/admin/plugins/popper.js/dist/umd/popper.min.js"></script>

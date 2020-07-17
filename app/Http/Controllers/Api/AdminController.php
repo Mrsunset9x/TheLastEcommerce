@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -16,14 +17,18 @@ class AdminController extends Controller
 
     function postLogin(Request $req)
     {
-        $email = $req->email;
-        $psw = $req->psw;
-        $getU = User::where(['email' => $email])->value('password');
-        if(Hash::check($psw, $getU))
-        {
-            return redirect('/adminapi');
-        } else {
+        $credentials= $req->only('email','password');
+        $token = Auth::guard()->attempt($credentials);
+//        $getU = User::where(['email' => $email])->value('password');
+//        if(Hash::check($psw, $getU))
+//        {
+        if(!empty($token)){
+            return view('admin.index',['token'=>$token]);
+        }else{
+
             return redirect()->back();
         }
+
     }
+
 }

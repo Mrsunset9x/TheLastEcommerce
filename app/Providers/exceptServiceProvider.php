@@ -7,9 +7,11 @@ use App\Repositories\CategoryRepository;
 use App\Repositories\Contracts\IBannerRepository;
 use App\Repositories\Contracts\ICategoryRepository;
 use App\Repositories\Contracts\ICouponRepository;
+use App\Repositories\Contracts\IImageRepository;
 use App\Repositories\Contracts\IOrderRepository;
 use App\Repositories\Contracts\IProductRepository;
 use App\Repositories\CouponRepository;
+use App\Repositories\ImageRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\ProductRepository;
 use Illuminate\Support\ServiceProvider;
@@ -38,5 +40,6 @@ class exceptServiceProvider extends ServiceProvider
         $this->app->bind(ICouponRepository::class,CouponRepository::class);
         $this->app->bind(IProductRepository::class,ProductRepository::class);
         $this->app->bind(IOrderRepository::class,OrderRepository::class);
+        $this->app->bind(IImageRepository::class,ImageRepository::class);
     }
 }

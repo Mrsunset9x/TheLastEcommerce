@@ -28,8 +28,9 @@ class ProductRequest extends FormRequest
     {
         return [
             'name' => 'required|min:10|max:50',
-            'sku'  => 'required|max:15|min:5',
-            'color'  => 'regex:/^[a-zA-Z]*$/'
+            'price'=> 'numeric',
+            'status'   =>'boolean',
+            'featured_products' => 'boolean'
         ];
     }
     public function failedValidation(Validator $validator)
@@ -41,5 +42,17 @@ class ProductRequest extends FormRequest
                 'messages' => $validator->errors()
             ]
         ], Response::HTTP_UNPROCESSABLE_ENTITY));
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Vui lòng nhập tên sản phẩm',
+            'name.min'      => 'Tên không được nhỏ hơn 10 ký tự',
+            'name.max'      => 'Tên khồn được quá 50 ký tự',
+            'price.numeric'         => 'Số tiền phải là kiểu số',
+            'status.boolean' => 'Trạng thái phải là có hoặc không',
+            'featured_products.boolean' =>'Sản phẩm nổi bật chỉ chọn có hoặc không'
+        ];
     }
 }

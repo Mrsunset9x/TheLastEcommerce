@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::namespace('api')->prefix('v1')->group(function(){
-    // Route::middleware('api.auth')->group(function() {
+    Route::middleware('api.auth')->group(function() {
 
         Route::post('me','AuthController@me');
         Route::post('refresh', 'AuthController@refresh');
@@ -35,7 +35,7 @@ Route::namespace('api')->prefix('v1')->group(function(){
         Route::post('product/{id}','ProductController@update');
         Route::resource('product','ProductController')->except('create','edit');
         Route::post('addimg/{id}','ProductController@addMoreImgToProduct');
-    // });
+     });
 
     Route::post('login', 'AuthController@login');
     Route::post('register','AuthController@register');

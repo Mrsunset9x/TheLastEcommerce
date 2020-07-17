@@ -12,7 +12,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/cart/{id}','Api\CartController@addProductToCart')->name('cartt');
+Route::middleware('api.auth')->group(function() {
+    Route::resource('/cart', 'Api\CartController');
+});
 Route::get('/', function () {
    return view('home.index');
 });
@@ -20,9 +23,9 @@ Route::get('/', function () {
 Route::get('/admin','Api\AdminController@login');
 Route::post('/postLogin','Api\AdminController@postLogin');
 
-Route::get('/adminapi', function(){
-    return view('admin.index');
-});
+//Route::get('/adminapi', function(){
+//    return view('admin.index');
+//});
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
