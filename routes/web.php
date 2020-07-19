@@ -17,7 +17,7 @@ Route::middleware('api.auth')->group(function() {
     Route::resource('/cart', 'Api\CartController');
 });
 Route::get('/', function () {
-   return view('home.index');
+   return view('welcome');
 });
 
 Route::get('/admin','Api\AdminController@login');
@@ -28,4 +28,6 @@ Route::post('/postLogin','Api\AdminController@postLogin');
 //});
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/admin', function () {
+    return view('home');
+});

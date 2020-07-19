@@ -1,29 +1,43 @@
 
 require('./bootstrap');
-import Notifications from 'vue-notification'
-import VueRouter from 'vue-router';
-import Vuex from 'vuex'
-import store from './store/index'
+
+import Vue from 'vue';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import locale from 'element-ui/lib/locale/lang/en';
+import VueRouter from 'vue-router';
 import axios from 'axios';
 
-import routes from './router/index'
 
-window.Vue = require('vue');
-window.Vue.use(VueRouter);
-window.Vue.use(Vuex);
-window.Vue.use(Notifications);
-window.Vue.use(ElementUI);
-window.Vue.use(axios);
+Vue.config.productionTip = false;
+
+import login from './components/login.vue';
+import listProduct from './components/Products/ListProduct.vue';
+
+Vue.use(ElementUI, {locale});
+Vue.use(VueRouter);
+Vue.use(axios);
 
 axios.defaults.baseURL = 'http://127.0.0.1:8000/';
 axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
-import VueConfirmDialog from "vue-confirm-dialog";
+Vue.prototype.$axios = axios
 
-Vue.use(VueConfirmDialog);
-const router = new VueRouter({ routes })
+const routes = [
+    { path: '/login', name: 'login', component: login },
+    { path:'./listProduct', name:'listProduct' , component:listProduct},
+]
+
+const router = new VueRouter({
+	 mode: 'history',
+    routes // short for `routes: routes`
+})
+Vue.component('admin',require('./components/App').default);
+Vue.component('login',require('./components/login').default);
+
+
 const app = new Vue({
-    router,store
-  }).$mount('#app')
+    el: '#app',
+    router
+});
