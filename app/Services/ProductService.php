@@ -33,7 +33,7 @@ class ProductService
                 $extension = $image_tmp->getClientOriginalExtension();
                 $request['image'] = $fileName = rand(111, 99999) . '.' . $extension;
                 $banner_path = 'uploads/products/avatar/' . $fileName;
-                Image::make($image_tmp)->resize(500, 500)->save($banner_path);
+                Image::make($image_tmp)->resize(150, 150)->save($banner_path);
             }
         }
         return $this->productRepository->create($request);
@@ -111,7 +111,7 @@ class ProductService
             $extension = $img->getClientOriginalExtension();
             $image['name'] = $fileName = rand(111, 99999) . '.' . $extension;
             $banner_path = 'uploads/products/' . $fileName;
-            Image::make($img)->resize(500, 500)->save($banner_path);
+            Image::make($img)->resize(300, 300)->save($banner_path);
             $this->imageRepository->create($image);
         }
         return $this->productRepository->showProductWithImg($id);

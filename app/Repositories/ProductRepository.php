@@ -34,6 +34,7 @@ class ProductRepository extends AbstractRepository implements IProductRepository
             'name'           => $attributes['name'],
             'description'    => $attributes['description'],
             'price'          => $attributes['price'],
+            'units'          => $attributes['units'],
             'image'          => $attributes['image'],
             'status'         => $attributes['status'],
             'featured_products' => $attributes['featured_products'],

@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->string('description')->nullable();
             $table->float('price');
             $table->string('image');
+            $table->integer('units');
             $table->tinyInteger('status');
             $table->tinyInteger('featured_products');
             $table->timestamps();

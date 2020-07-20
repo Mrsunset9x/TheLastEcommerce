@@ -13,11 +13,9 @@ class OrderRepository extends AbstractRepository implements IOrderRepository
     }
 
     public function getAll($request, $limit = null)
-    {
-        $query = Order::query()->with('products');
-        if ($query) {
-            $query->orderBy($request['column'], $request['sort']);
-        }
-        return $query->paginate($limit);
+    {   $query = Order::query()->with('products');
+        $query->join('order_product','order_product.order_id','orders.id')
+            ->select('orders.*','order_product.*');
+        return $query->get();
     }
 }

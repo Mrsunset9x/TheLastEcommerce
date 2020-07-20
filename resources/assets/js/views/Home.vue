@@ -11,7 +11,7 @@
                             <router-link :to="{ path: '/products/'+product.id}">
                                 <img :src="'/uploads/products/avatar/'+product.image" :alt="product.name">
                                 <h5><span v-html="product.name"></span>
-                                    <span class="small-text text-muted float-right">$ {{product.price}}</span>
+                                    <span class="small-text text-muted float-right">${{product.price}}</span>
                                 </h5>
                                 <button class="col-md-4 btn btn-sm btn-primary float-right">Buy Now</button>
                             </router-link>
@@ -41,7 +41,7 @@
                 }).catch((errors) => {
                     this.loading = false;
                     this.$message({type: 'error',message: errors.message});
-                });   
+                });
         }
     }
 </script>

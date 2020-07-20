@@ -1,27 +1,31 @@
 <template>
 	<div>
-        <table class="table table-responsive table-striped">
+        <table class="table table-responsive table-striped" style="color: black ; text-align: center">
             <thead>
                 <tr>
                     <td></td>
-                    <td>Product</td>
-                    <td>Units</td>
-                    <td>Price</td>
-                    <td>Description</td>
+                    <td style="width: 40%">Product</td>
+                    <td style="width: 20%">Units</td>
+                    <td style="width: 30%">Price</td>
+                    <td style="width: 40%">Description</td>
+                    <td style="width: 40%">Image</td>
+                    <td style="width: 40%">Action</td>
                 </tr>
             </thead>
-            <tbody>
-                <tr v-for="(product,index) in products" @key="index" @dblclick="editingItem = product">
+            <tbody style="background-color: wheat ">
+                <tr v-for="(product,index) in products" @key="index" @dblclick="editingItem = product" >
                     <td>{{index+1}}</td>
-                    <td v-html="product.name"></td>
-                    <td v-model="product.units">{{product.units}}</td>
-                    <td v-model="product.price">{{product.price}}</td>
-                    <td v-model="product.price">{{product.description}}</td>
+                    <td v-html="product.name" ></td>
+                    <td v-model="product.units" >{{product.units}}</td>
+                    <td v-model="product.price" >{{product.price}}</td>
+                    <td v-model="product.price" >{{product.description}}</td>
+                    <td ><img :src="'/uploads/products/avatar/'+product.image" :alt="product.name"></td>
+                    <td>
+                        <a ><i class="fa fa-trash-o" style="color:red ; font-size: 17px"></i></a> </td>
                 </tr>
             </tbody>
         </table>
-        <modal @close="endEditing" :product="editingItem" v-show="editingItem != null"></modal>
-        <modal @close="addProduct"  :product="addingProduct" v-show="addingProduct != null"></modal>
+
         <br>
         <button class="btn btn-primary" @click="newProduct">Add New Product</button>
     </div>
@@ -33,26 +37,29 @@
             return {
                 products : [],
                 editingItem : null,
-                addingProduct : null
+                addingProduct : null,
+                totalRecord: 0,
+                currentPage: 1,
+                sort: 'column=id&sort=desc',
             }
         },
         components : {
             Modal
         },
         beforeMount(){
-            axios.get('/api/products/')
+            this.$axios.get(`/api/v1/product/?page=${this.currentPage}&${this.sort}`)
             .then(response => {
-                this.products = response.data
+                this.products = response.data.product
             })
             .catch(error => {
                 console.error(error);
-            })     
+            })
         },
         methods : {
             newProduct(){
                 this.addingProduct = {
-                    name : null, 
-                    units : null, 
+                    name : null,
+                    units : null,
                     price : null,
                     description : null,
                     image : null
@@ -93,3 +100,7 @@
         }
     }
 </script>
+
+<style scoped>
+
+</style>

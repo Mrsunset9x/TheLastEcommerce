@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
 use Illuminate\Http\Response;
@@ -33,12 +34,12 @@ class OrderController extends Controller
             return response()->json([
                 'status' => true,
                 'code'   => Response::HTTP_OK,
-                'order'  => $order->items(),
-                'meta'   => [
-                    'total'       => $order->total(),
-                    'perPage'     => $order->perPage(),
-                    'currentPage' => $order->currentPage(),
-                ]
+                'order'  => $order,
+//                'meta'   => [
+//                    'total'       => $order->total(),
+//                    'perPage'     => $order->perPage(),
+//                    'currentPage' => $order->currentPage(),
+//                ]
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -51,6 +52,18 @@ class OrderController extends Controller
             ]);
         }
 
+    }
+
+    public function deliverOrder(Order $order)
+    {
+        $order->order_status =1;
+        $status = $order->save();
+
+        return response()->json([
+            'status'    => $status,
+            'data'      => $order,
+            'message'   => $status ? 'Order Delivered!' : 'Error Delivering Order'
+        ]);
     }
 
     /**

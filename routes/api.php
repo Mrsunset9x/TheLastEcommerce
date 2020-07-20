@@ -31,6 +31,7 @@ Route::namespace('api')->prefix('v1')->group(function(){
 
         Route::resource('banner','BannerController')->except('create','edit');
 
+        Route::patch('orders/{order}/deliver','OrderController@deliverOrder');
         Route::resource('order','OrderController')->except('create','edit');
 
         Route::resource('category','CategoryController')->except('create','edit');
@@ -39,7 +40,7 @@ Route::namespace('api')->prefix('v1')->group(function(){
 
         Route::post('product/{id}','ProductController@update');
 
-        // Route::resource('product','ProductController')->except('create','edit');
+        Route::resource('product','ProductController')->except('create','edit','index');
 
 
         Route::post('addimg/{id}','ProductController@addMoreImgToProduct');

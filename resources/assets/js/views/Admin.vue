@@ -1,15 +1,46 @@
 <template>
     <div>
-        <div id="xxx" class="container">
+        <div class="container">
             <div class="row">
-                <div class="col-md-3">
-                    <ul style="list-style-type:none">
-                      <li class="active"><button class="btn" @click="setComponent('main')">Dashboard</button></li>
-                      <li><button class="btn" @click="setComponent('orders')">Orders</button></li>
-                      <li><button class="btn" @click="setComponent('products')">Products</button></li>
-                      <li><button class="btn" @click="setComponent('users')">Users</button></li>
+            <nav class="navbar-default navbar-static-side" role="navigation">
+                <div class="sidebar-collapse">
+                    <ul class="nav metismenu" id="side-menu">
+                        <li>
+                            <a href="" @click="setComponent('main')"><i class="fa fa-diamond"></i> <span class="nav-label">Dashboard</span></a>
+                        </li>
+                        <li>
+                            <a href="#" @click="setComponent('products')"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Products</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li><a href="#">Flot Charts</a></li>
+                                <li><a href="">Morris.js Charts</a></li>
+                                <li><a href="">Rickshaw Charts</a></li>
+                                <li><a href="">Chart.js</a></li>
+                                <li><a href="">Chartist</a></li>
+                                <li><a href="">c3 charts</a></li>
+                                <li><a href="">Peity Charts</a></li>
+                                <li><a href="">Sparkline Charts</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"  @click="setComponent('orders')"><i class="fa fa-pie-chart"></i> <span class="nav-label">Order</span>  </a>
+                        </li>
+                        <li>
+                            <a href="#" @click="setComponent('users')"><i class="fa fa-edit"></i> <span class="nav-label">Users</span><span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li><a href="#">Basic form</a></li>
+                                <li><a href="#">Advanced Plugins</a></li>
+                                <li><a href="#">Wizard</a></li>
+                                <li><a href="#">File Upload</a></li>
+
+                            </ul>
+                        </li>
+
+                        <li class="special_link">
+                            <a href="package.html"><i class="fa fa-database"></i> <span class="nav-label">Package</span></a>
+                        </li>
                     </ul>
                 </div>
+            </nav>
                 <div class="col-md-9">
                     <component :is="activeComponent"></component>
                 </div>
