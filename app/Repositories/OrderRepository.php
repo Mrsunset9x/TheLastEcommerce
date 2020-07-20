@@ -14,7 +14,7 @@ class OrderRepository extends AbstractRepository implements IOrderRepository
 
     public function getAll($request, $limit = null)
     {
-        $query = Order::query();
+        $query = Order::query()->with('products');
         if ($query) {
             $query->orderBy($request['column'], $request['sort']);
         }

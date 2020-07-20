@@ -32,7 +32,13 @@ class OrderController extends Controller
             $order = $this->orderService->getAll($orderBys, $limit);
             return response()->json([
                 'status' => true,
-                'order' => $order
+                'code'   => Response::HTTP_OK,
+                'order'  => $order->items(),
+                'meta'   => [
+                    'total'       => $order->total(),
+                    'perPage'     => $order->perPage(),
+                    'currentPage' => $order->currentPage(),
+                ]
             ]);
         } catch (\Exception $e) {
             return response()->json([

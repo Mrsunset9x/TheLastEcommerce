@@ -29,7 +29,13 @@ class ProductController extends Controller
             $product = $this->productService->getAll($orderBys, $limit);
             return response()->json([
                 'status' => true,
-                'product' => $product
+                'code'   => Response::HTTP_OK,
+                'product'  => $product->items(),
+                'meta'   => [
+                    'total'       => $product->total(),
+                    'perPage'     => $product->perPage(),
+                    'currentPage' => $product->currentPage(),
+                ]
             ]);
         } catch (\Exception $e) {
             return response()->json([

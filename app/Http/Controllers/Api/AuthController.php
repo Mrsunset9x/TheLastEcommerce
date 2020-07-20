@@ -39,8 +39,8 @@ class AuthController extends Controller
                     ]
                 ]);
             }
-
-            return $this->respondWithToken($token);
+            $user = Auth::user();
+            return $this->respondWithToken($token,$user);
 
         } catch (\Exception $e) {
             return response()->json([
@@ -79,17 +79,18 @@ class AuthController extends Controller
 
     }
 
-    public function refresh()
-    {
-        return $this->respondWithToken(Auth::guard()->refresh());
-    }
+//    public function refresh()
+//    {
+//        return $this->respondWithToken(Auth::guard()->refresh());
+//    }
 
 
-    protected function respondWithToken($token)
+    protected function respondWithToken($token,$user)
     {
         return response()->json([
-            'access_token' => $token,
+            'jwt' => $token,
             'token_type' => 'bearer',
+            'user'        => $user
             //'expires_in' => auth()->factory()->getTTL() * 60
         ]);
     }
