@@ -9,6 +9,10 @@ use App\Http\Requests\BannerRequest;
 use App\Services\BannerService;
 use Intervention\Image\Facades\Image;
 
+// check file tồn tại trong local storate
+// xoá update banner
+// notify in backend
+
 class BannerController extends Controller
 {
     protected $bannerService;

@@ -4,10 +4,11 @@ import axios from 'axios';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/en';
+import CKEditor from 'ckeditor4-vue';
 
 Vue.use(VueRouter)
 Vue.use(ElementUI, {locale});
-
+Vue.use( CKEditor );
 
 import App from './views/App'
 import Home from './views/Home'

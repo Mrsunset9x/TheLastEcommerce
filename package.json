@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "ckeditor4-vue": "^1.0.1",
         "element-ui": "^2.13.2",
         "reset-css": "^5.0.1",
         "vue-confirm-dialog": "^1.0.2",

@@ -8,11 +8,14 @@ use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\AuthRequest;
 Use App\Models\User;
+use Carbon\Carbon;
 
 class AuthController extends Controller
 {
     public function register(AuthRequest $request)
     {
+        $now = Carbon::now();
+
         $params = $request->only('email', 'name', 'password', 'address','phone');
         $user = new User();
         $user->name = $params['name'];
@@ -20,6 +23,8 @@ class AuthController extends Controller
         $user->address = $params['address'];
         $user->phone    = $params['phone'];
         $user->password = bcrypt($params['password']);
+        $user->created_at = $now->diffInDays($user->created_at);
+        $user->updated_at = now()->toDateString();
         $user->save();
 
         return response()->json($user, Response::HTTP_OK);

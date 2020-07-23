@@ -9,33 +9,25 @@
                             <a href="package.html"><i class="fa fa-database"></i> <span class="nav-label">Dashboard</span></a>
                         </li>
                         <li>
-                            <a href="#"  @click="setComponent('orders')"><i class="fa fa-pie-chart"></i> <span class="nav-label">Banners</span>  </a>
+                            <a href="#"  @click="setComponent('banner')"><i class="fa fa-pie-chart"></i> <span class="nav-label">Banners</span>  </a>
                         </li>
                         <li>
                             <a href="#" @click="setComponent('products')"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Products</span><span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level collapse">
-                                <li><a href="#">Flot Charts</a></li>
-                                <li><a href="">Morris.js Charts</a></li>
-                                <li><a href="">Rickshaw Charts</a></li>
-                                <li><a href="">Chart.js</a></li>
-                                <li><a href="">Chartist</a></li>
-                                <li><a href="">c3 charts</a></li>
-                                <li><a href="">Peity Charts</a></li>
-                                <li><a href="">Sparkline Charts</a></li>
-                            </ul>
                         </li>
                         <li>
                             <a href="#"  @click="setComponent('orders')"><i class="fa fa-pie-chart"></i> <span class="nav-label">Order</span>  </a>
                         </li>
                         <li>
                             <a href="#" @click="setComponent('users')"><i class="fa fa-edit"></i> <span class="nav-label">Users</span><span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level collapse">
-                                <li><a href="#">Basic form</a></li>
-                                <li><a href="#">Advanced Plugins</a></li>
-                                <li><a href="#">Wizard</a></li>
-                                <li><a href="#">File Upload</a></li>
 
-                            </ul>
+                        </li>
+                        <li>
+                            <a href="#" @click="setComponent('#')"><i class="fa fa-edit"></i> <span class="nav-label">Suppliers</span><span class="fa arrow"></span></a>
+
+                        </li>
+                        <li>
+                            <a href="#" @click="setComponent('#')"><i class="fa fa-edit"></i> <span class="nav-label">Revenue statistics</span><span class="fa arrow"></span></a>
+
                         </li>
 
                     </ul>
@@ -53,6 +45,7 @@
     import Users from '../components/admin/Users'
     import Products from '../components/admin/Products'
     import Orders from '../components/admin/Orders'
+    import Banner from '../components/admin/Banner'
 
     export default {
         data(){
@@ -73,6 +66,10 @@
         methods : {
             setComponent(value){
                 switch(value) {
+                    case "banner":
+                        this.activeComponent = Banner
+                        this.$router.push({name : 'admin-pages', params : {page: 'banner'}})
+                        break;
                     case "users":
                         this.activeComponent = Users
                         this.$router.push({name : 'admin-pages', params : {page: 'users'}})

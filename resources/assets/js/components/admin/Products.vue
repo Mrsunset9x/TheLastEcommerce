@@ -1,30 +1,24 @@
 <template>
 	<div>
-        <table class="table table-responsive table-striped" style="color: black ; text-align: center ;width: 100%">
+        <table id="productTable" class="table table-dark noenmodel" style="text-align: center ;width: 100%">
             <thead>
                 <tr>
                     <td></td>
-                    <td style="width: 40%">Product</td>
+                    <td style="width: 40%">Product Name</td>
                     <td style="width: 20%">Units</td>
                     <td style="width: 30%">Price</td>
                     <td style="width: 40%">Category</td>
                     <td style="width: 40%">Image</td>
-                    <td style="width: 40%">Action</td>
                 </tr>
             </thead>
-            <tbody style="background-color: wheat ">
+            <tbody>
                 <tr v-for="(product,index) in products" @key="index" @dblclick="editingItem = product" >
                     <td>{{index+1}}</td>
                     <td v-html="product.name" ></td>
                     <td v-model="product.units" >{{product.units}}</td>
                     <td v-model="product.price" >{{product.price}}</td>
-                    <td >{{product.category_id}}</td>
+                    <td >{{product.Catname}}</td>
                     <td ><img :src="'/uploads/products/avatar/'+product.image" :alt="product.image"></td>
-                    <td>
-                        <a v-model="productId" value="product.id" @click="deleteProduct">
-                            <i class="fa fa-trash-o" style="color:red ; font-size: 17px"></i>
-                        </a>
-                    </td>
                 </tr>
             </tbody>
         </table>
@@ -60,16 +54,15 @@
             })
             .catch(error => {
                 console.error(error);
-            }).then(
-                this.$axios.get(`api/v1/category?limit=10&page=1&column=id&sort=asc`)
+            });
+            this.$axios.get(`api/v1/category?limit=10&page=1&column=id&sort=asc`)
                     .then(res=>{
                         this.category =res.data.category;
                     }).catch(errors =>{
                     console.log(errors)
                 })
-            )
         },
-        // Lấy được tấtc cả thông tin nhưng chưa lưu được vào database
+
         methods : {
             newProduct(){
                 this.addingProduct = {
@@ -120,14 +113,13 @@
                 })
             },
 
-            deleteProduct()
-            {
-               console.log( this.productId);
-            }
         }
     }
 </script>
 
 <style scoped>
+.noenmodel {
+    transition: inherit;
 
+}
 </style>

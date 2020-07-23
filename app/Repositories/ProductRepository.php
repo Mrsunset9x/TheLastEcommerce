@@ -17,7 +17,9 @@ class ProductRepository extends AbstractRepository implements IProductRepository
     {
         $query = Product::query()->with('attributes','images');
         if ($query) {
-            $query->orderBy($request['column'], $request['sort']);
+            $query->join('categories','products.category_id','categories.id')
+            ->select('products.*','categories.name as Catname')
+            ->orderBy($request['column'], $request['sort']);
         }
 
         return $query->paginate($limit);

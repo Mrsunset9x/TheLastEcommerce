@@ -110,10 +110,11 @@ class ProductService
             $image['product_id'] = $product->id;
             $extension = $img->getClientOriginalExtension();
             $image['name'] = $fileName = rand(111, 99999) . '.' . $extension;
-            $banner_path = 'uploads/products/' . $fileName;
-            Image::make($img)->resize(300, 300)->save($banner_path);
+            $image_path = 'uploads/products/' . $fileName;
+            Image::make($img)->resize(500, 500)->save($image_path);
             $this->imageRepository->create($image);
         }
+            dd($image);
         return $this->productRepository->showProductWithImg($id);
     }
 

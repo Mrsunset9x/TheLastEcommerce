@@ -1,46 +1,51 @@
 <template>
     <div class="modal-mask">
         <div class="modal-wrapper">
-            <div class="modal-container">
-                <div class="modal-header">
-                    <slot name="header" v-html="data.name">
-                        <div>Thêm Sản mới sản phẩm</div>
-                    </slot>
-                </div>
+                <div class="modal-container">
+                    <div class="modal-header">
+                        <slot name="header" v-html="data.name">
+                            <div >Thông tin sản phẩm</div>
+                        </slot>
+                    </div>
 
-                <div class="modal-body">
-                    <slot name="body">
-                        Name: <input type="text" v-model="data.name">
-                        Category :<div v-for="(item,index) in category">
-                            <input type="radio" v-bind:value="item.id" v-model="data.category_id">
-                            <span>{{ item.name }}</span>
-                        </div>
-                        Units: <input type="text" v-model="data.units">
-                        <br>
-                        Price: <input type="text" v-model="data.price">
-                        <br>
-                        Description: <textarea v-model="data.description"></textarea>
+                    <div class="modal-body">
+                        <slot name="body">
+                            <div>Name: <input type="text" v-model="data.name"></div>
+                            <br>
+                            Category :<div v-for="(item,index) in category">
+                                <input type="radio" v-bind:value="item.id" v-model="data.category_id">
+                                <span>{{ item.name }}</span>
+                            </div>
 
-                        <span >
-                          <img :src="'/uploads/products/avatar/'+data.image" :alt="product.image" v-show="data.image != null">
-                          <input type="file" id="file" @change="attachFile">
-                        </span>
-                        <br>
-                        <br>
-                        <input type="radio" value="1" v-model="data.status"> Hiển thị
-                        <input type="radio" value="0" v-model="data.status"> Không hiển thị
-                    </slot>
-                </div>
+                           <div style="padding-top: 12px"> Units: <input type="text" v-model="data.units"></div>
+                            <br>
+                            <div>Price: <input type="text" v-model="data.price"></div>
+                            <br>
+                            Description:
+                            <br>
+                            <ckeditor v-model="data.description"></ckeditor>
+<!--                            <div style="padding-top: 10px"><textarea v-model="data.description" placeholder="Description"></textarea></div>-->
 
-                <div class="modal-footer">
-                    <slot name="footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" @click="uploadFile">
-                            Finish
-                        </button>
-                    </slot>
+                            <span >
+                              <img  class="img-thumbnail" :src="'/uploads/products/avatar/'+data.image" :alt="product.image" v-show="data.image != null">
+                              <input type="file" id="file" @change="attachFile">
+                            </span>
+                            <br>
+                            <br>
+                            <input type="radio" value="1" v-model="data.status"> Hiển thị
+                            <input type="radio" value="0" v-model="data.status"> Không hiển thị
+                        </slot>
+                    </div>
+
+                    <div class="modal-footer">
+                        <slot name="footer">
+                            <button type="button" class="btn btn-secondary" @click="close">Close</button>
+                            <button type="button" class="btn btn-primary" @click="uploadFile">
+                                Finish
+                            </button>
+                        </slot>
+                    </div>
                 </div>
-            </div>
         </div>
     </div>
 </template>
@@ -102,13 +107,18 @@
                 else {
                     this.$emit('close', this.product)
                 }
+            },
+            close()
+            {
+                this.$emit('close')
             }
+
         }
     }
 </script>
 <style scoped>
     .modal-mask {
-        position: fixed;
+        position: absolute;
         z-index: 9998;
         top: 0;
         left: 0;
@@ -125,7 +135,7 @@
     }
 
     .modal-container {
-        width: 300px;
+        width: 600px;
         margin: 0px auto;
         padding: 20px 30px;
         background-color: #fff;

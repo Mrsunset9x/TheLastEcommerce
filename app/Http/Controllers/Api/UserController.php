@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\UserService;
 use Illuminate\Http\Response;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -82,7 +83,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+       $a = User::find($id)->created_at;
+       return $a->toDateString();
     }
 
     /**

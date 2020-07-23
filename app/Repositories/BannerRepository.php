@@ -28,7 +28,6 @@ class BannerRepository extends AbstractRepository implements IBannerRepository
           'status'  => $request['status'],
            'images'  => $request['image']
        ]);
-
     }
 
     public function getAll($request ,$limit = null)
@@ -37,18 +36,19 @@ class BannerRepository extends AbstractRepository implements IBannerRepository
         if ($query) {
             $query->orderBy($request['column'], $request['sort']);
         }
-        return $query->where('status', 1)->paginate($limit);
+        return $query->paginate($limit);
     }
 
     public function update($id, array $attributes)
     {
+        dd($attributes);
         return Banner::where('id',$id)->update([
             'name'=>$attributes['banner_name'],
             'text_style'=>$attributes['text_style'],
             'content'=>$attributes['banner_content'],
             'link'=>$attributes['link'],
             'sort_order'=>$attributes['sort_order'],
-            'image'=>$attributes['image']
+            'images'=>$attributes['image']
         ]);
     }
 

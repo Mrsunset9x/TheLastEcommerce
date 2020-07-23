@@ -68,14 +68,15 @@ class BannerService
             $image_tmp = $data['image'];
             if ($image_tmp->isValid()) {
                 // Upload Images after Resize
-                $extension = $image_tmp->getClientOriginalExtension();
+                $extension = $data['image']->getClientOriginalExtension();
                 $fileName = rand(111, 99999) . '.' . $extension;
                 $banner_path = 'uploads/banners/' . $fileName;
                 Image::make($image_tmp)->save($banner_path);
             }
+            $data['image'] = $fileName;
+        return $this->bannerRepository->update($id,[$data]);
         }
-        $banner['image'] = $fileName;
-        return $this->bannerRepository->update($id,$banner);
+        return $banner;
     }
 
     public function delete($id)
