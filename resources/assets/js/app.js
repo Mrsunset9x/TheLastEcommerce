@@ -23,6 +23,7 @@ Vue.use(axios);
 axios.defaults.baseURL = 'http://127.0.0.1:8000/';
 axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('jwt')}`;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+// axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
 
 Vue.prototype.$axios = axios
 

@@ -32,7 +32,7 @@
             }
         },
         mounted(){
-            axios.get('/api/users/')
+            axios.get('/api/v1/users/')
             .then(response => {
                 this.users = response.data
             })

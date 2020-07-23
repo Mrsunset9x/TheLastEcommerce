@@ -45,9 +45,8 @@
         beforeMount() {
             this.$axios.get(`/api/v1/order/?page=${this.currentPage}&${this.sort}`)
                 .then(response => {
-                    this.orders = response.data.order
-                    console.log(response.data.order);
-
+                    console.log(response);
+                    this.orders = response.data.order;
                 })
                 .catch(error => {
                     console.error(error);
@@ -56,7 +55,7 @@
         methods: {
             deliver(index) {
                 let order = this.orders[index]
-                this.$axios.patch(`/api/v1/order/${order.id}/deliver`)
+                this.$axios.patch(`/api/v1/orders/${order.id}/deliver`)
                     .then(response => {
                         this.orders[index].order_status = 1
                         this.$forceUpdate()

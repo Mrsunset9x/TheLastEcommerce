@@ -1,12 +1,15 @@
 <template>
     <div>
-        <div class="container">
+        <div class="container" style=" max-width: 100%">
             <div class="row">
             <nav class="navbar-default navbar-static-side" role="navigation">
                 <div class="sidebar-collapse">
                     <ul class="nav metismenu" id="side-menu">
+                        <li class="special_link">
+                            <a href="package.html"><i class="fa fa-database"></i> <span class="nav-label">Dashboard</span></a>
+                        </li>
                         <li>
-                            <a href="" @click="setComponent('main')"><i class="fa fa-diamond"></i> <span class="nav-label">Dashboard</span></a>
+                            <a href="#"  @click="setComponent('orders')"><i class="fa fa-pie-chart"></i> <span class="nav-label">Banners</span>  </a>
                         </li>
                         <li>
                             <a href="#" @click="setComponent('products')"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Products</span><span class="fa arrow"></span></a>
@@ -35,9 +38,6 @@
                             </ul>
                         </li>
 
-                        <li class="special_link">
-                            <a href="package.html"><i class="fa fa-database"></i> <span class="nav-label">Package</span></a>
-                        </li>
                     </ul>
                 </div>
             </nav>

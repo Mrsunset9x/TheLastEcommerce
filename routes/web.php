@@ -31,4 +31,4 @@ Route::middleware('api.auth')->group(function() {
 
 Route::get('/{any}', function(){
         return view('landing');
-})->where('any', '.*');
+})->where('any', '.*')->name('home');

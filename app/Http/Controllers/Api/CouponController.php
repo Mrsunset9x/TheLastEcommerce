@@ -27,8 +27,14 @@ class CouponController extends Controller
             }
             $coupon = $this->couponService->getAll($orderBys,$limit);
             return response()->json([
-                'status'    => true,
-                'coupon'    =>$coupon
+                'status' => true,
+                'code'   => Response::HTTP_OK,
+                'coupon'  => $coupon->items(),
+                'meta'   => [
+                    'total'       => $coupon->total(),
+                    'perPage'     => $coupon->perPage(),
+                    'currentPage' => $coupon->currentPage(),
+                ]
             ]);
         }catch (\Exception $e)
         {

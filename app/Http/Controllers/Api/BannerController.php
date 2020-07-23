@@ -34,8 +34,14 @@ class BannerController extends Controller
             }
             $banner = $this->bannerService->getAll($orderBys,$limit);
              return response()->json([
-                'status'    => true,
-                'banner'    =>$banner
+                 'status' => true,
+                 'code'   => Response::HTTP_OK,
+                 'banner'  => $banner->items(),
+                 'meta'   => [
+                     'total'       => $banner->total(),
+                     'perPage'     => $banner->perPage(),
+                     'currentPage' => $banner->currentPage(),
+                 ]
             ]);
         }catch (\Exception $e)
         {

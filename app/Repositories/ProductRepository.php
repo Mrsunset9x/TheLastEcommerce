@@ -37,7 +37,6 @@ class ProductRepository extends AbstractRepository implements IProductRepository
             'units'          => $attributes['units'],
             'image'          => $attributes['image'],
             'status'         => $attributes['status'],
-            'featured_products' => $attributes['featured_products'],
         ]);
     }
     public function find($id)

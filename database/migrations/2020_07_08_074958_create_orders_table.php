@@ -21,7 +21,7 @@ class CreateOrdersTable extends Migration
             $table->string('address');
             $table->string('mobile');
             $table->string('shipping_charges')->default(0);
-            $table->string('order_status')->nullable();
+            $table->string('order_status')->default(0);
             $table->timestamps();
         });
     }

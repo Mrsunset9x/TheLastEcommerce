@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="container-fluid hero-section d-flex align-content-center justify-content-center flex-wrap ml-auto">
-            <h2 class="title">Welcome to Autumn Shop !!</h2>
+            <img src="public/uploads/banners/banner.jpg" alt="banner">
         </div>
         <div class="container">
             <div class="row">

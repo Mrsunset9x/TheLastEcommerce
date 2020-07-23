@@ -55,7 +55,6 @@
                 if (this.user.password.length > 0) {
                     this.$axios.post('http://localhost:8000/api/v1/login', this.user)
                       .then(response => {
-                          console.log(response);
                         let level = response.data.user.level
                         localStorage.setItem('user',JSON.stringify(response.data.user))
                         localStorage.setItem('jwt',response.data.jwt)

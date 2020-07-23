@@ -21,8 +21,8 @@ class CreateProductsTable extends Migration
             $table->float('price');
             $table->string('image');
             $table->integer('units');
-            $table->tinyInteger('status');
-            $table->tinyInteger('featured_products');
+            $table->tinyInteger('status')->default(1);
+            $table->tinyInteger('featured_products')->nullable();
             $table->timestamps();
         });
     }

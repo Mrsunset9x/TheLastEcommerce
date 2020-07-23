@@ -26,38 +26,38 @@ class ProductService
 
     public function store($request)
     {
-        if (is_file($request['image'])) {
-            $image_tmp = $request['image'];
-            if ($image_tmp->isValid()) {
-                // Upload Images after Resize
-                $extension = $image_tmp->getClientOriginalExtension();
-                $request['image'] = $fileName = rand(111, 99999) . '.' . $extension;
-                $banner_path = 'uploads/products/avatar/' . $fileName;
-                Image::make($image_tmp)->resize(150, 150)->save($banner_path);
-            }
-        }
+//        if (is_file($request['image'])) {
+//            $image_tmp = $request['image'];
+//            if ($image_tmp->isValid()) {
+//                // Upload Images after Resize
+//                $extension = $image_tmp->getClientOriginalExtension();
+//                $request['image'] = $fileName = rand(111, 99999) . '.' . $extension;
+//                $image_path = 'uploads/products/avatar/' . $fileName;
+//                Image::make($image_tmp)->resize(150, 150)->save($image_path);
+//            }
+//        }
         return $this->productRepository->create($request);
     }
 
     public function update($request,$id)
     {
-        if (!empty($request['image'])) {
-            $products = $this->productRepository->find($id);
-            foreach ($products as $product) {
-                $image_path = "/uploads/products/avatar/" . $product->image;
-                if (file_exists(public_path($image_path))) {
-                    unlink(public_path($image_path));
-                }
-            }
-            $image_tmp = $request['image'];
-            if ($image_tmp->isValid()) {
-                // Upload Images after Resize
-                $extension = $image_tmp->getClientOriginalExtension();
-                $request['image'] = $fileName = rand(111, 99999) . '.' . $extension;
-                $banner_path = 'uploads/products/avatar/' . $fileName;
-                Image::make($image_tmp)->resize(500, 500)->save($banner_path);
-            }
-        }
+//        if (!empty($request['image'])) {
+//            $products = $this->productRepository->find($id);
+//            foreach ($products as $product) {
+//                $image_path = "/uploads/products/avatar/" . $product->image;
+//                if (file_exists(public_path($image_path))) {
+//                    unlink(public_path($image_path));
+//                }
+//            }
+//            $image_tmp = $request['image'];
+//            if ($image_tmp->isValid()) {
+//                // Upload Images after Resize
+//                $extension = $image_tmp->getClientOriginalExtension();
+//                $request['image'] = $fileName = rand(111, 99999) . '.' . $extension;
+//                $banner_path = 'uploads/products/avatar/' . $fileName;
+//                Image::make($image_tmp)->resize(150, 150)->save($banner_path);
+//            }
+//        }
         return $this->productRepository->create($request, $id);
     }
 

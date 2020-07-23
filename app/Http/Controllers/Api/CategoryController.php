@@ -31,8 +31,14 @@ class CategoryController extends Controller
             }
             $category = $this->categoryService->getAll($orderBys,$limit);
             return response()->json([
-                'status'    => true,
-                'category'    =>$category
+                'status' => true,
+                'code'   => Response::HTTP_OK,
+                'category'  => $category->items(),
+                'meta'   => [
+                    'total'       => $category->total(),
+                    'perPage'     => $category->perPage(),
+                    'currentPage' => $category->currentPage(),
+                ]
             ]);
         }catch (\Exception $e)
         {

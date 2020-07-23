@@ -7,6 +7,7 @@ use App\Http\Requests\ProductRequest;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Intervention\Image\Facades\Image;
 
 class ProductController extends Controller
 {
@@ -112,11 +113,10 @@ class ProductController extends Controller
     public function destroy($id)
     {
         try {
-            $product = $this->productService->delete($id);
+            $this->productService->delete($id);
             return response()->json([
                 'status' => true,
                 'code' => Response::HTTP_OK,
-                'product' => $product
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -147,6 +147,21 @@ class ProductController extends Controller
                         'message' => $e->getMessage(),
                     ]
             ]);
+        }
+    }
+
+    public function uploadFile(Request $request)
+    {
+        if (is_file($request->image)) {
+            $image_tmp = $request->image;
+            if ($image_tmp->isValid()) {
+                // Upload Images after Resize
+                $extension = $image_tmp->getClientOriginalExtension();
+                 $fileName = $request->image = rand(111, 99999) . '.' . $extension;
+                $image_path = 'uploads/products/avatar/' . $fileName;
+                Image::make($image_tmp)->resize(150, 150)->save($image_path);
+            }
+            return $fileName;
         }
     }
 
