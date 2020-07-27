@@ -22,13 +22,16 @@ Route::namespace('api')->prefix('v1')->group(function(){
     Route::middleware('api.auth')->group(function() {
         //Auth
         Route::post('me','AuthController@me');
+        Route::post('me','AuthController@register');
         Route::post('refresh', 'AuthController@refresh');
         Route::post('logout','AuthController@logout');
 
         //Route::resource('/cart', 'carttController')->except('create', 'edit','show');
 
         //Banner
-        Route::post('banner/{id}','BannerController@update');
+        Route::post('banner/{status}/status','BannerController@deliverOrder');
+//        Route::post('banner/{id}','BannerController@update');
+        Route::post('/bannerimg','BannerController@upladImg');
         Route::resource('banner','BannerController')->except('create','edit');
 
         //order
@@ -49,6 +52,7 @@ Route::namespace('api')->prefix('v1')->group(function(){
 
         //User
         Route::patch('user/{user}/accept','UserController@acceptUser');
+        Route::get('/user/{user}/order','UserController@OrderUser');
         Route::resource('user','UserController')->except('create','edit');
 
      });

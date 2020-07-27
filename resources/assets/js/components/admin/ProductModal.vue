@@ -32,8 +32,8 @@
                             </span>
                             <br>
                             <br>
-                            <input type="radio" value="1" v-model="data.status"> Hiển thị
-                            <input type="radio" value="0" v-model="data.status"> Không hiển thị
+                            <input type="radio"  v-model="data.status" value="1"> Hiển thị
+                            <input type="radio"  v-model="data.status" value="0"> Không hiển thị
                         </slot>
                     </div>
 
@@ -61,6 +61,7 @@
 
         },
         props : ['product'],
+
         data(){
             return {
                 attachment : null,
@@ -118,6 +119,7 @@
 </script>
 <style scoped>
     .modal-mask {
+        padding-top: 10px;
         position: absolute;
         z-index: 9998;
         top: 0;

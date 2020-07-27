@@ -9,15 +9,18 @@
                     <br>
                     <div class="row">
                         <div class="col-md-4 product-box" v-for="(order,index) in orders" @key="index">
-                            <img :src="order.product.image" :alt="order.product.name">
-                            <h5><span v-html="order.product.name"></span><br>
-                                <span class="small-text text-muted">$ {{order.product.price}}</span>
+                            <div v-for="(prd,index) in order['products']" @key="index">
+                            <img :src="`/uploads/products/avatar/`+prd.image" :alt="prd.name">
+
+                            <h5><span v-html="prd.name"></span><br>
+                                <span class="small-text text-muted">{{prd.price}}</span>
                             </h5>
                             <hr>
-                            <span class="small-text text-muted">Quantity: {{order.quantity}}
-                                <span class="float-right">{{order.is_delivered == 1? "shipped!" : "not shipped"}}</span>
-                            </span>
+<!--                            <span class="small-text text-muted">Quantity: {{order.quantity}}-->
+                                <span class="float-right">{{order.order_status == 1? "shipped!" : "not shipped"}}</span>
+<!--                            </span>-->
                             <br><br>
+                            </div>
                             <p><strong>Delivery address:</strong> <br>{{order.address}}</p>
                         </div>
                     </div>
@@ -31,7 +34,7 @@
         data(){
             return {
                 user : null,
-                orders : []
+                orders : [],
             }
         },
         beforeMount(){
@@ -39,13 +42,13 @@
             axios.defaults.headers.common['Content-Type'] = 'application/json'
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('jwt')
 
-            axios.get(`api/users/${this.user.id}/orders`)
+            this.$axios.get(`api/v1/user/${this.user.id}/order`)
             .then(response => {
                 this.orders = response.data
             })
             .catch(error => {
                 console.error(error);
-            })       
+            })
         }
     }
 </script>

@@ -1,53 +1,36 @@
-
 <template>
-        <div class="container">
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card card-default">
                     <div class="card-header">Register</div>
 
                     <div class="card-body">
-                        <form>
-                            <div class="form-group row">
-                                <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
-
-                                <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control" v-model="name" required autofocus>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
-
-                                <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control" v-model="email" required>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
-
-                                <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control" v-model="password" required>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm Password</label>
-
-                                <div class="col-md-6">
-                                    <input id="password-confirm" type="password" class="form-control" v-model="password_confirmation" required>
-                                </div>
-                            </div>
-
-                            <div class="form-group row mb-0">
-                                <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary" @click="handleSubmit">
-                                        Register
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+                        <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="120px"
+                                 class="demo-ruleForm">
+                            <el-form-item label="Name" prop="name">
+                                <el-input v-model="ruleForm.name" autocomplete="off"></el-input>
+                            </el-form-item>
+                            <el-form-item label="Your Email" prop="email">
+                                <el-input v-model="ruleForm.email" autocomplete="off"></el-input>
+                            </el-form-item>
+                            <el-form-item label="Address" prop="address">
+                                <el-input v-model="ruleForm.address" autocomplete="off"></el-input>
+                            </el-form-item>
+                            <el-form-item label="Your Phone" prop="phone">
+                                <el-input v-model.number="ruleForm.phone"></el-input>
+                            </el-form-item>
+                            <el-form-item label="Password" prop="password">
+                                <el-input type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
+                            </el-form-item>
+                            <el-form-item label="Confirm" prop="checkPass">
+                                <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-button type="primary" @click="submitForm('ruleForm')">Submit</el-button>
+                                <el-button @click="resetForm('ruleForm')">Reset</el-button>
+                            </el-form-item>
+                        </el-form>
                     </div>
                 </div>
             </div>
@@ -56,52 +39,130 @@
 </template>
 
 <script>
-    export default {
-        props : ['nextUrl'],
-        data(){
-            return {
-                name : "",
-                email : "",
-                password : "",
-                password_confirmation : ""
+export default {
+    props: ['nextUrl'],
+    data() {
+        var checkName = (rule, value, callback) => {
+            if (!value) {
+                return callback(new Error('Please input the name'));
             }
+        };
+        var checkAddress = (rule, value, callback) => {
+            if (!value) {
+                return callback(new Error('Please input the Address'));
+            }
+        };
+        var checkPhone = (rule, value, callback) => {
+            if (!value) {
+                return callback(new Error('Please input the Phone'));
+            }
+            setTimeout(() => {
+                if (!Number.isInteger(value)) {
+                    callback(new Error('Please input digits'));
+                }
+            }, 1000);
+        };
+        var checkEmail = (rule, value, callback) => {
+            if (!value) {
+                return callback(new Error('Please input the Email'));
+            }
+        };
+        var validatePass = (rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('Please input the password'));
+            } else {
+                if (this.ruleForm.checkPass !== '') {
+                    this.$refs.ruleForm.validateField('checkPass');
+                }
+                callback();
+            }
+        };
+        var validatePass2 = (rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('Please input the password again'));
+            } else if (value !== this.ruleForm.password) {
+                callback(new Error('Two inputs don\'t match!'));
+            } else {
+                callback();
+            }
+        };
+        return {
+            ruleForm: {
+                name: '',
+                email: '',
+                phone: '',
+                address: '',
+                password: '',
+                checkPass: '',
+            },
+            rules: {
+                name: [
+                    {validator: checkName, trigger: 'blur'}
+                ],
+                password: [
+                    {validator: validatePass, trigger: 'blur'}
+                ],
+                checkPass: [
+                    {validator: validatePass2, trigger: 'blur'}
+                ],
+                address: [
+                    {validator: checkAddress, trigger: 'blur'}
+                ],
+                phone: [
+                    {validator: checkPhone, trigger: 'blur'}
+                ],
+                email: [
+                    {validator: checkEmail, trigger: 'blur'}
+                ]
+            }
+        }
+    },
+    methods: {
+
+        submitForm(formname) {
+            this.$refs[formname].validate((valid) => {
+                if (valid) {
+                    this.handleSubmit();
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
         },
-        methods : {
-            handleSubmit(e) {
-                e.preventDefault()
-                
-                if (this.password === this.password_confirmation && this.password.length > 0)
-                {
-                    axios.post('api/register', {
-                        name: this.name,
-                        email: this.email,
-                        password: this.password,
-                        c_password : this.password_confirmation
-                      })
-                      .then(response => {
-                        localStorage.setItem('user',JSON.stringify(response.data.user))
-                        localStorage.setItem('jwt',response.data.token)
-                        
-                        if (localStorage.getItem('jwt') != null){
+        handleSubmit(e) {
+            e.preventDefault()
+
+            if (this.password === this.password_confirmation && this.password.length > 0) {
+                axios.post('api/v1/register', {
+                    name: this.name,
+                    email: this.email,
+                    phone: this.phone,
+                    address: this.address,
+                    password: this.password,
+                }).then(response => {
+                        console.log(response);
+                        localStorage.setItem('user', JSON.stringify(response.data.user))
+                        localStorage.setItem('jwt', response.data.token)
+
+                        if (localStorage.getItem('jwt') != null) {
                             this.$emit('loggedIn')
-                            if(this.$route.params.nextUrl != null){
+                            if (this.$route.params.nextUrl != null) {
                                 this.$router.push(this.$route.params.nextUrl)
-                            }
-                            else{
+                            } else {
                                 this.$router.push('/')
                             }
                         }
-                      })
-                      .catch(error => {
+                    })
+                    .catch(error => {
                         console.error(error);
-                      });
-                } else {
-                    this.password = ""
-                    this.passwordConfirm = ""
-                    
-                    return alert('Passwords do not match')
-                }
+                    });
+            } else {
+                this.password = ""
+                this.passwordConfirm = ""
+
+                return alert('Passwords do not match')
             }
         }
     }
+}
 </script>

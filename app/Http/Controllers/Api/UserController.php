@@ -147,4 +147,24 @@ class UserController extends Controller
             'message'   => $status ? '$user Delivered!' : 'Error accept $user'
         ]);
     }
+
+    public function OrderUser(User $user)
+    {
+        try {
+            return $this->userService->getOrderUser($user);
+
+//            return response()->json($user->orders()->with(['products'])->get(),200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'errors' =>
+                    [
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => $e->getMessage(),
+                    ]
+            ]);
+        }
+
+    }
 }

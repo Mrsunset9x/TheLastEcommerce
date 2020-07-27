@@ -27,6 +27,11 @@
             </tr>
             </tbody>
         </table>
+        <el-pagination
+            layout="prev, pager, next"
+            @current-change="changePage"
+            :total="totalRecord">
+        </el-pagination>
     </div>
 </template>
 <script>
@@ -42,7 +47,7 @@
                 loading: false,
             }
         },
-        beforeMount() {
+        created() {
             this.$axios.get(`/api/v1/order/?page=${this.currentPage}&${this.sort}`)
                 .then(response => {
                     console.log(response);
@@ -63,7 +68,12 @@
                     .catch(error => {
                         console.error(error);
                     })
-            }
+            },
+            changePage(page) {
+                this.currentPage = page;
+                this.getBanner();
+            },
         }
+
     }
 </script>

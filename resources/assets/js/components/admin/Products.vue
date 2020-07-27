@@ -17,11 +17,17 @@
                     <td v-html="product.name" ></td>
                     <td v-model="product.units" >{{product.units}}</td>
                     <td v-model="product.price" >{{product.price}}</td>
-                    <td >{{product.Catname}}</td>
+                    <td v-model="product.category_id">{{product.Catname}}</td>
                     <td ><img :src="'/uploads/products/avatar/'+product.image" :alt="product.image"></td>
                 </tr>
             </tbody>
+
         </table>
+        <el-pagination
+            layout="prev, pager, next"
+            @current-change="changePage"
+            :total="totalRecord">
+        </el-pagination>
         <modal @close="endEditing" :product="editingItem" v-show="editingItem != null"></modal>
         <modal @close="addProduct"  :product="addingProduct" v-show="addingProduct != null"></modal>
         <br>
@@ -48,19 +54,7 @@
             Modal
         },
         beforeMount(){
-            this.$axios.get(`/api/v1/product/?page=${this.currentPage}&${this.sort}`)
-            .then(response => {
-                this.products = response.data.product
-            })
-            .catch(error => {
-                console.error(error);
-            });
-            this.$axios.get(`api/v1/category?limit=10&page=1&column=id&sort=asc`)
-                    .then(res=>{
-                        this.category =res.data.category;
-                    }).catch(errors =>{
-                    console.log(errors)
-                })
+            this.getProducts();
         },
 
         methods : {
@@ -73,28 +67,26 @@
                     image : null
                 }
             },
-            endEditing(product){
-                console.log(product);
-                this.editingItem = null
-                let index = this.products.indexOf(product)
-                this.$axios.post(`/api/v1/product/${product.id}`,{
-                    category_id :product.category_id,
-                    name  : product.name,
-                    description : product.description,
-                    price : product.price,
-                    units : product.units,
-                    image : product.image,
-                    status :product.status,
-                })
-                .then(response =>{
-                    this.products[index] = product
-                })
-                .catch(response => {
-
+            getProducts()
+            {
+                this.$axios.get(`/api/v1/product/?page=${this.currentPage}&${this.sort}`)
+                    .then(response => {
+                        this.products = response.data.product
+                        this.totalRecord =response.data.meta.total
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+                this.$axios.get(`api/v1/category?limit=10&page=1&column=id&sort=asc`)
+                    .then(res=>{
+                        this.category =res.data.category;
+                    }).catch(errors =>{
+                    console.log(errors)
                 })
             },
+
             addProduct(product){
-                console.log(product);
+                console.log(product)
                 this.addingProduct = null
                 this.$axios.post("/api/v1/product/",{
                     category_id :product.category_id,
@@ -111,6 +103,29 @@
                 .catch(response => {
 
                 })
+            },
+            endEditing(product){
+                this.editingItem = null
+                let index = this.products.indexOf(product)
+                this.$axios.post(`/api/v1/product/${product.id}`,{
+                    category_id :product.category_id,
+                    name  : product.name,
+                    description : product.description,
+                    price : product.price,
+                    units : product.units,
+                    image : product.image,
+                    status :product.status,
+                })
+                    .then(response =>{
+                        this.products[index] = product
+                    })
+                    .catch(response => {
+
+                    })
+            },
+            changePage(page) {
+                this.currentPage = page;
+                this.getProducts();
             },
 
         }

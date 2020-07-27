@@ -6,7 +6,7 @@
                 <div class="sidebar-collapse">
                     <ul class="nav metismenu" id="side-menu">
                         <li class="special_link">
-                            <a href="package.html"><i class="fa fa-database"></i> <span class="nav-label">Dashboard</span></a>
+                            <a href='/admin'><i class="fa fa-database"></i> <span class="nav-label">Dashboard</span></a>
                         </li>
                         <li>
                             <a href="#"  @click="setComponent('banner')"><i class="fa fa-pie-chart"></i> <span class="nav-label">Banners</span>  </a>
@@ -55,7 +55,7 @@
             }
         },
         components : {
-            Main, Users, Products, Orders
+            Main, Users, Products, Orders,Banner
         },
         beforeMount(){
             this.setComponent(this.$route.params.page)
@@ -92,15 +92,4 @@
     }
 </script>
 <style scoped>
-    .hero-section {
-        height: 20vh;
-        background: #ababab;
-        align-items: center;
-        margin-bottom: 20px;
-        margin-top: -20px;
-    }
-    .title {
-        font-size: 60px;
-        color: #ffffff;
-    }
 </style>

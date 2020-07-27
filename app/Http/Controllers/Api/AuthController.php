@@ -20,9 +20,9 @@ class AuthController extends Controller
         $user = new User();
         $user->name = $params['name'];
         $user->email = $params['email'];
+        $user->password = bcrypt($params['password']);
         $user->address = $params['address'];
         $user->phone    = $params['phone'];
-        $user->password = bcrypt($params['password']);
         $user->created_at = $now->diffInDays($user->created_at);
         $user->updated_at = now()->toDateString();
         $user->save();
@@ -93,6 +93,8 @@ class AuthController extends Controller
     protected function respondWithToken($token,$user)
     {
         return response()->json([
+            'status'=>true,
+            'code'    => Response::HTTP_OK,
             'jwt' => $token,
             'token_type' => 'bearer',
             'user'        => $user

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Banner;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Requests\BannerRequest;
@@ -16,6 +17,7 @@ use Intervention\Image\Facades\Image;
 class BannerController extends Controller
 {
     protected $bannerService;
+
     public function __construct(BannerService $bannerService)
     {
         $this->bannerService = $bannerService;
@@ -25,7 +27,6 @@ class BannerController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\JsonResponse
-
      */
     public function index(Request $request)
     {
@@ -36,19 +37,18 @@ class BannerController extends Controller
                 $orderBys['column'] = $request->get('column');
                 $orderBys['sort'] = $request->get('sort');
             }
-            $banner = $this->bannerService->getAll($orderBys,$limit);
-             return response()->json([
-                 'status' => true,
-                 'code'   => Response::HTTP_OK,
-                 'banner'  => $banner->items(),
-                 'meta'   => [
-                     'total'       => $banner->total(),
-                     'perPage'     => $banner->perPage(),
-                     'currentPage' => $banner->currentPage(),
-                 ]
+            $banner = $this->bannerService->getAll($orderBys, $limit);
+            return response()->json([
+                'status' => true,
+                'code' => Response::HTTP_OK,
+                'banner' => $banner->items(),
+                'meta' => [
+                    'total' => $banner->total(),
+                    'perPage' => $banner->perPage(),
+                    'currentPage' => $banner->currentPage(),
+                ]
             ]);
-        }catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             return response()->json([
                 'errors' =>
                     [
@@ -68,19 +68,18 @@ class BannerController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(BannerRequest $request)
+    public function store(Request $request)
     {
         try {
             $banner = $this->bannerService->create($request->all());
             return response()->json([
-                'status'    => true,
-                'banner'    =>$banner,
+                'status' => true,
+                'banner' => $banner,
             ]);
-        }catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             return response()->json([
                 'errors' =>
                     [
@@ -95,7 +94,7 @@ class BannerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
@@ -103,11 +102,10 @@ class BannerController extends Controller
         try {
             $banner = $this->bannerService->find($id);
             return response()->json([
-                'status'    => true,
-                'banner'    =>$banner,
+                'status' => true,
+                'banner' => $banner,
             ]);
-        }catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             return response()->json([
                 'errors' =>
                     [
@@ -122,27 +120,27 @@ class BannerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, $id)
     {
         try {
-            $banner = $this->bannerService->update($request,$id);
+            $banner = $this->bannerService->update($request, $id);
 
             return response()->json([
-                'status'    => true,
-                'banner'    =>$banner
+                'status' => true,
+                'code'   => Response::HTTP_OK,
+                'banner' => $banner
             ]);
-        }catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             return response()->json([
                 'errors' =>
                     [
@@ -157,20 +155,19 @@ class BannerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
         try {
-             $this->bannerService->delete($id);
+            $this->bannerService->delete($id);
 
             return response()->json([
-                'status'    => true,
-                'code'   => Response::HTTP_OK,
+                'status' => true,
+                'code' => Response::HTTP_OK,
             ]);
-        }catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             return response()->json([
                 'errors' =>
                     [
@@ -180,5 +177,33 @@ class BannerController extends Controller
                     ]
             ]);
         }
+    }
+
+    public function upladImg(Request $request)
+    {
+        try {
+            return $bannreImg = $this->bannerService->updateImage($request->image);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'errors' =>
+                    [
+                        'status' => false,
+                        'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                        'message' => $e->getMessage(),
+                    ]
+            ]);
+        }
+    }
+
+    public function deliverOrder(Banner $banner)
+    {
+        $banner->status = 1;
+        $status = $banner->save();
+
+        return response()->json([
+            'status'    => $status,
+            'data'      => $banner,
+        ]);
     }
 }

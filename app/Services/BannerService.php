@@ -21,23 +21,11 @@ class BannerService
     {
         $banner = [];
         $banner['name'] = $request['name'];
-        $banner['text_style'] = $request['text_style'];
-        $banner['sort_order'] = $request['sort_order'];
         $banner['content'] = $request['content'];
         $banner['link'] = $request['link'];
         $banner['status'] = $request['status'];
         // Upload Image
-        if (is_file($request['image'])) {
-            $image_tmp = $request['image'];
-            if ($image_tmp->isValid()) {
-                // Upload Images after Resize
-                $extension = $image_tmp->getClientOriginalExtension();
-                $fileName = rand(111, 99999) . '.' . $extension;
-                $banner_path = 'uploads/banners/' . $fileName;
-                Image::make($image_tmp)->save($banner_path);
-            }
-        }
-        $banner['image'] = $fileName;
+        $banner['image'] = $request['images'];
         return $this->bannerRepository->create($banner);
     }
 
@@ -53,30 +41,31 @@ class BannerService
 
     public function update($data ,$id)
     {
-       $banner = $this->bannerRepository->find($id);
-       if(!empty($banner->images))
-       {
-           $img = 'uploads/banners/' . $banner->images;
-           if ($img !=null) {
-               unlink(public_path('uploads/banners/' .$banner->images));
-           }else
-           {
-               return false;
-           }
-       }
-        if (is_file($data['image'])) {
-            $image_tmp = $data['image'];
-            if ($image_tmp->isValid()) {
-                // Upload Images after Resize
-                $extension = $data['image']->getClientOriginalExtension();
-                $fileName = rand(111, 99999) . '.' . $extension;
-                $banner_path = 'uploads/banners/' . $fileName;
-                Image::make($image_tmp)->save($banner_path);
-            }
-            $data['image'] = $fileName;
-        return $this->bannerRepository->update($id,[$data]);
-        }
-        return $banner;
+//       $banner = $this->bannerRepository->find($id);
+//       if(!empty($banner->images))
+//       {
+//           $img = 'uploads/banners/' . $banner->images;
+//           if ($img !=null) {
+//               unlink(public_path('uploads/banners/' .$banner->images));
+//           }else
+//           {
+//               return false;
+//           }
+//       }
+//        if (is_file($data['image'])) {
+//            $image_tmp = $data['image'];
+//            if ($image_tmp->isValid()) {
+//                // Upload Images after Resize
+//                $extension = $data['image']->getClientOriginalExtension();
+//                $fileName = rand(111, 99999) . '.' . $extension;
+//                $banner_path = 'uploads/banners/' . $fileName;
+//                Image::make($image_tmp)->save($banner_path);
+//            }
+//            $data['image'] = $fileName;
+//        return $this->bannerRepository->update($id,[$data]);
+//        }
+//        return $banner;
+        return $this->bannerRepository->create($data,$id);
     }
 
     public function delete($id)
@@ -84,15 +73,25 @@ class BannerService
         $banner = $this->bannerRepository->find($id);
         if(!empty($banner->images))
         {
-            $img = 'uploads/banners/'.$banner->images;
-            if (!empty(public_path('uploads/banners/'.$banner->images)))
+            if (file_exists(public_path('uploads/banners/'.$banner->images)))
             {
                 unlink(public_path('uploads/banners/'.$banner->images));
-            }else
-            {
-                return false;
             }
         }
         return $this->bannerRepository->delete($id);
+    }
+
+    public function updateImage($img)
+    {
+        if (is_file($img))
+        {
+            $extension = $img->getClientOriginalExtension();
+            $fileName = rand(111, 99999) . '.' . $extension;
+            $banner_path = 'uploads/banners/' . $fileName;
+            Image::make($img)->save($banner_path);
+            return $fileName;
+        }else {
+            return $fileName = '';
+        }
     }
 }

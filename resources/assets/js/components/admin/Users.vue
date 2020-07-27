@@ -12,7 +12,6 @@
                 <th scope="col">Total Orders</th>
                 <th scope="col">Is Active</th>
                 <th scope="col">Acction</th>
-
             </tr>
             </thead>
             <tbody>
@@ -32,6 +31,11 @@
             </tr>
             </tbody>
         </table>
+        <el-pagination
+            layout="prev, pager, next"
+            @current-change="changePage"
+            :total="totalRecord">
+        </el-pagination>
     </div>
 </template>
 <script>
@@ -52,7 +56,8 @@
             {
                 this.$axios.get(`/api/v1/user/?page=${this.currentPage}&${this.sort}`)
                     .then(response => {
-                        console.log(response)
+                        console.log(response);
+                        this.totalRecord = response.data.meta.total;
                         this.users = response.data.users
                     })
                     .catch(error => {
@@ -79,7 +84,11 @@
                 }).catch(errors =>{
                     console.log(errors);
                 })
-            }
+            },
+            changePage(page) {
+                this.currentPage = page;
+                this.getUser();
+            },
         }
     }
 </script>

@@ -27,8 +27,7 @@ class BannerRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:banners',
-            'image' => 'file|dimensions:min_width=100,min_height=200'
+            'image' => 'file'
         ];
     }
 
@@ -46,10 +45,7 @@ class BannerRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Vui lòng nhập tên Banner !',
-            'name.unique'   => 'Tên Banner đã tồn tại',
             'image.file'    =>'Ảnh gửi lên không đúng đụng dạng',
-            'image.dimensions'=>'Hình ảnh khồn đúng kích thước'
         ];
     }
 }

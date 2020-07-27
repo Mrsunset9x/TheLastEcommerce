@@ -22,4 +22,14 @@ class UserService
         return $this->iuserRepository->delete($id);
     }
 
+    public function getOrderUser($userId)
+    {
+         return $this->iuserRepository->getOrder($userId);
+//         foreach ($a as $b)
+//         {
+//            $c = (object)$b->products;
+//         }
+//         return $c;
+    }
+
 }
