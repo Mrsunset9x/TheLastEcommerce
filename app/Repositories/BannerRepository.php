@@ -24,7 +24,7 @@ class BannerRepository extends AbstractRepository implements IBannerRepository
                 'content' => $request['content'],
                 'link' => $request['link'],
                 'status' => $request['status'],
-                'images' => $request['image']
+                'images' => $request['images']
             ]);
     }
 

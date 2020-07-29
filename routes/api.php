@@ -19,10 +19,12 @@ use Illuminate\Support\Facades\Route;
 //});
 
 Route::namespace('api')->prefix('v1')->group(function(){
+    Route::get('/product/{id}', 'ProductController@show');
+    Route::get('/banner/', 'BannerController@index');
+
     Route::middleware('api.auth')->group(function() {
         //Auth
         Route::post('me','AuthController@me');
-        Route::post('me','AuthController@register');
         Route::post('refresh', 'AuthController@refresh');
         Route::post('logout','AuthController@logout');
 
@@ -30,9 +32,8 @@ Route::namespace('api')->prefix('v1')->group(function(){
 
         //Banner
         Route::post('banner/{status}/status','BannerController@deliverOrder');
-//        Route::post('banner/{id}','BannerController@update');
         Route::post('/bannerimg','BannerController@upladImg');
-        Route::resource('banner','BannerController')->except('create','edit');
+        Route::resource('banner','BannerController')->except('create','edit','index');
 
         //order
         Route::patch('orders/{order}/deliver','OrderController@deliverOrder');
@@ -44,20 +45,24 @@ Route::namespace('api')->prefix('v1')->group(function(){
         //Counpon
         Route::resource('coupon','CouponController')->except('create','edit');
 
+
         //products
         Route::post('product/{id}','ProductController@update');
         Route::post('/upload', 'ProductController@uploadFile');
-        Route::resource('product','ProductController')->except('create','edit','index');
-        Route::post('addimg/{id}','ProductController@addMoreImgToProduct');
+        Route::resource('product','ProductController')->except('create','edit','index','show');
 
+        //image
+        Route::post('/deletemultipleimg','ImageController@deleteImg');
         //User
         Route::patch('user/{user}/accept','UserController@acceptUser');
         Route::get('/user/{user}/order','UserController@OrderUser');
         Route::resource('user','UserController')->except('create','edit');
 
      });
+
     Route::get('product','ProductController@index');
 
     Route::post('login', 'AuthController@login');
     Route::post('register','AuthController@register');
+    Route::post('addimg/{id}','ProductController@addMoreImgToProduct');
 });

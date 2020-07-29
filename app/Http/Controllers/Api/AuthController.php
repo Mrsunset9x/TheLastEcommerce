@@ -16,18 +16,22 @@ class AuthController extends Controller
     {
         $now = Carbon::now();
 
-        $params = $request->only('email', 'name', 'password', 'address','phone');
+         $request->only('email', 'name', 'password', 'address','phone');
         $user = new User();
-        $user->name = $params['name'];
-        $user->email = $params['email'];
-        $user->password = bcrypt($params['password']);
-        $user->address = $params['address'];
-        $user->phone    = $params['phone'];
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->address = $request->address;
+        $user->phone    = $request->phone;
         $user->created_at = $now->diffInDays($user->created_at);
         $user->updated_at = now()->toDateString();
         $user->save();
 
-        return response()->json($user, Response::HTTP_OK);
+        $credentials = $request->only('email', 'password');
+        $token = Auth::guard()->attempt($credentials);
+
+
+        return $this->respondWithToken($token,$user);
     }
     public function login(Request $request)
     {
@@ -46,7 +50,6 @@ class AuthController extends Controller
             }
             $user = Auth::user();
             return $this->respondWithToken($token,$user);
-
         } catch (\Exception $e) {
             return response()->json([
                 'errors' => [

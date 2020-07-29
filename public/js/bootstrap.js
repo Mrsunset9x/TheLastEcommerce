@@ -20069,10 +20069,10 @@ module.exports = g;
 
 /***/ }),
 
-/***/ "./resources/assets/js/bootstrap.js":
-/*!******************************************!*\
-  !*** ./resources/assets/js/bootstrap.js ***!
-  \******************************************/
+/***/ "./resources/js/bootstrap.js":
+/*!***********************************!*\
+  !*** ./resources/js/bootstrap.js ***!
+  \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20127,13 +20127,13 @@ if (token) {
 /***/ }),
 
 /***/ 1:
-/*!************************************************!*\
-  !*** multi ./resources/assets/js/bootstrap.js ***!
-  \************************************************/
+/*!*****************************************!*\
+  !*** multi ./resources/js/bootstrap.js ***!
+  \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\laragon\www\TheLastEcommerce\resources\assets\js\bootstrap.js */"./resources/assets/js/bootstrap.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\TheLastEcommerce\resources\js\bootstrap.js */"./resources/js/bootstrap.js");
 
 
 /***/ })

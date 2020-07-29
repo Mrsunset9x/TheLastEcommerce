@@ -26,4 +26,9 @@ class ImageRepository extends AbstractRepository implements IImageRepository
             'name'       => $attributes['name']
         ]);
     }
+
+    public function deleteWithName($name)
+    {
+        return Image::where('name',$name)->delete($name);
+    }
 }

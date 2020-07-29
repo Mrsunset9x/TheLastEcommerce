@@ -28,7 +28,8 @@ class AuthRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:users|min:10',
-            'email' => 'required|unique:users'
+            'email' => 'required|unique:users',
+            'phone'=>'required|unique:users',
         ];
     }
 
@@ -48,7 +49,9 @@ class AuthRequest extends FormRequest
             'name.required' => 'Bạn vui lòng nhập tên ! ',
             'name.min'      =>'Họ và Tên phải có ít nhất 20 ký tự',
             'name.unique'   => 'Tên của bạn đã tồn tại !',
-            'email.unique'  => 'Email của bạn đã tồn tại !'
+            'email.unique'  => 'Email của bạn đã tồn tại !',
+            'phone.unique'  => 'Số điện thoại của bạn đã tồn tại !',
+            'phone.required'  => 'Vui lòng nhập số điện thoại  !',
         ];
     }
 
