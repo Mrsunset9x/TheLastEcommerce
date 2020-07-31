@@ -25,7 +25,7 @@ class BannerService
         $banner['link'] = $request['link'];
         $banner['status'] = $request['status'];
         // Upload Image
-        $banner['image'] = $request['images'];
+        $banner['images'] = $request['images'];
         return $this->bannerRepository->create($banner);
     }
 
@@ -41,30 +41,6 @@ class BannerService
 
     public function update($data ,$id)
     {
-//       $banner = $this->bannerRepository->find($id);
-//       if(!empty($banner->images))
-//       {
-//           $img = 'uploads/banners/' . $banner->images;
-//           if ($img !=null) {
-//               unlink(public_path('uploads/banners/' .$banner->images));
-//           }else
-//           {
-//               return false;
-//           }
-//       }
-//        if (is_file($data['image'])) {
-//            $image_tmp = $data['image'];
-//            if ($image_tmp->isValid()) {
-//                // Upload Images after Resize
-//                $extension = $data['image']->getClientOriginalExtension();
-//                $fileName = rand(111, 99999) . '.' . $extension;
-//                $banner_path = 'uploads/banners/' . $fileName;
-//                Image::make($image_tmp)->save($banner_path);
-//            }
-//            $data['image'] = $fileName;
-//        return $this->bannerRepository->update($id,[$data]);
-//        }
-//        return $banner;
         return $this->bannerRepository->create($data,$id);
     }
 

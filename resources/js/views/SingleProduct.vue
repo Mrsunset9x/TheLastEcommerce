@@ -1,33 +1,84 @@
 <template>
-    <div class="container">
-        <div class="row">
-            <div v-for="prd in product">
-                <div class="col-md-8 offset-md-2">
-                    <img :src="'/uploads/products/avatar/'+prd.image" :alt="prd.name">
-                    <h3 class="title" v-html="prd.name"></h3>
-                    <p class="text-muted">{{ prd.description }}</p>
-                    <h4>
-                        <span class="small-text text-muted float-left">$ {{ prd.price }}</span>
-                        <span class="small-text float-right">Available Quantity: {{ prd.units }}</span>
-                    </h4>
-                    <br>
-                    <hr>
-                </div>
-                <router-link :to="{ path: '/checkout?pid='+prd.id }"
-                             class="col-md-4 btn btn-sm btn-primary float-right">Buy Now
-                </router-link>
-            </div>
-<!--            <div class="imgg">-->
-<!--            <div class="demo-image__placeholder">-->
-<!--                <div class="block" v-for="img in images">-->
-<!--                    <el-image :src="'/uploads/products/'+img.name" :alt="img.name" style="max-width: 300px"></el-image>-->
+    <div>
+<!--        <div class="container">-->
+<!--            <div class="row">-->
+<!--                <div v-for="prd in product">-->
+<!--                    <div class="col-md-8 offset-md-5" style="max-width: 100%">-->
+<!--                        <img :src="'/uploads/products/avatar/'+prd.image" :alt="prd.name" style="max-width: 700px">-->
+<!--                        <div >-->
+<!--                            <div class="card product-card" v-for="img in images" style=" float: left ;max-width: 100px">-->
+<!--                                <img :src="'/uploads/products/'+img.name" :alt="img.name"-->
+<!--                                     style="max-height: 150px;max-width: 150px">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <h3 class="title" v-html="prd.name"></h3>-->
+<!--                        <p class="text-muted">{{ prd.description }}</p>-->
+<!--                        <h4>-->
+<!--                            <span class="small-text text-muted float-left">$ {{ prd.price }}</span>-->
+<!--                            <span class="small-text float-right">Available Quantity: {{ prd.units }}</span>-->
+<!--                        </h4>-->
+<!--                        <br>-->
+
+<!--                    </div>-->
+<!--                    <router-link :to="{ path: '/checkout?pid='+prd.id }"-->
+<!--                                 class="col-md-4 btn btn-sm btn-primary float-right">Buy Now-->
+<!--                    </router-link>-->
 <!--                </div>-->
+
 <!--            </div>-->
-<!--            </div>-->
-            <div class="demo-image__lazy" >
-                <el-image v-for="url in images" :key="url.name" :src="'/uploads/products/'+url.name" lazy ></el-image>
+
+<!--        </div>-->
+        <div class="container">
+            <div class="card">
+                <div class="container-fliud">
+                    <div class="wrapper row" v-for="prd in product">
+                        <div class="preview col-md-6">
+
+                            <div class="preview-pic tab-content" >
+                                <div class="tab-pane active" id="pic-1"><img :src="'/uploads/products/avatar/'+prd.image" :alt="prd.name" /></div>
+<!--                                <div class="tab-pane" :id="pic+1"  v-for="img in images"><img :src="'/uploads/products/'+img.name" :alt="img.name" /></div>-->
+                            </div>
+                            <ul class="preview-thumbnail nav nav-tabs">
+                                <li class="active" v-for="img in images"><a data-target="#pic-1" data-toggle="tab"><img :src="'/uploads/products/'+img.name" :alt="img.name" /></a></li>
+                            </ul>
+
+                        </div>
+                        <div class="details col-md-6">
+                            <h3 class="product-title">{{ prd.name }}</h3>
+                            <div class="rating">
+                                <el-rate
+                                    v-model="star"
+                                    :texts="['oops', 'disappointed', 'normal', 'good', 'great']"
+                                    show-text>
+                                </el-rate>
+                                <span class="review-no">41 reviews</span>
+                            </div>
+                            <p class="product-description">{{ prd.description }}</p>
+                            <h4 class="price">current price: <span> ${{ prd.price }}</span></h4>
+                            <p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
+                            <h5 class="sizes" >sizes:
+
+                            </h5>
+                            <h5 class="colors">colors:
+                                <span class="color orange not-available" data-toggle="tooltip" title="Not In store"></span>
+                                <span class="color green"></span>
+                                <span class="color blue"></span>
+                            </h5>
+                            <div class="action">
+
+                            </div>
+                            <div class="action" style="padding-top: 10px">
+                                <button class=" col-md-2 btn btn-sm btn-danger" >add to cart</button>
+                                <router-link :to="{ path: '/checkout?pid='+prd.id }"
+                                             class="add-to-cart btn btn-default">Buy Now
+                                </router-link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
     </div>
 </template>
 <script>
@@ -35,20 +86,29 @@ export default {
     data() {
         return {
             product: [],
+            attribute:[],
+            choice:'',
             images: [],
-
+            star:null
 
         }
     },
     beforeMount() {
         this.$axios.get(`/api/v1/product/${this.$route.params.id}`)
             .then(response => {
-                console.log(response);
-                this.product = response.data.product
-                $.each(this.product,(key,value)=>{
-                    $.each(value.images,(k,v)=>{
+                console.log(response.data.product);
+
+                this.product = response.data.product.products
+                $.each(this.product, (key, value) => {
+                    $.each(value.images, (k, v) => {
                         this.images.push(v);
                     })
+                })
+                $.each(this.product, (z, u) => {
+                    // $.each(u.attributes, (k, v) => {
+                    //     console.log(v.name);
+                    // })
+                    this.attribute.push(u.attributes);
                 })
             })
             .catch(error => {
@@ -64,8 +124,169 @@ export default {
 
 .title {
     font-size: 36px;
+    margin-left: 30px;
 }
+
 .demonstration {
     display: flex;
 }
+img {
+    max-width: 100%; }
+
+.preview {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column; }
+@media screen and (max-width: 996px) {
+    .preview {
+        margin-bottom: 20px; } }
+
+.preview-pic {
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1; }
+
+.preview-thumbnail.nav-tabs {
+    border: none;
+    margin-top: 15px; }
+.preview-thumbnail.nav-tabs li {
+    width: 18%;
+    margin-right: 2.5%; }
+.preview-thumbnail.nav-tabs li img {
+    max-width: 100%;
+    display: block; }
+.preview-thumbnail.nav-tabs li a {
+    padding: 0;
+    margin: 0; }
+.preview-thumbnail.nav-tabs li:last-of-type {
+    margin-right: 0; }
+
+.tab-content {
+    overflow: hidden; }
+.tab-content img {
+    width: 100%;
+    -webkit-animation-name: opacity;
+    animation-name: opacity;
+    -webkit-animation-duration: .3s;
+    animation-duration: .3s; }
+
+.card {
+    margin-top: 50px;
+    background: #eee;
+    padding: 3em;
+    line-height: 1.5em; }
+
+@media screen and (min-width: 997px) {
+    .wrapper {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex; } }
+
+.details {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column; }
+
+.colors {
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1; }
+
+.product-title, .price, .sizes, .colors {
+    text-transform: UPPERCASE;
+    font-weight: bold; }
+
+.checked, .price span {
+    color: #ff9f1a; }
+
+.product-title, .rating, .product-description, .price, .vote, .sizes {
+    margin-bottom: 15px; }
+
+.product-title {
+    margin-top: 0; }
+
+.size {
+    margin-right: 10px; }
+.size:first-of-type {
+    margin-left: 40px; }
+
+.color {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+    height: 2em;
+    width: 2em;
+    border-radius: 2px; }
+.color:first-of-type {
+    margin-left: 20px; }
+
+.add-to-cart, .like {
+    background: #ff9f1a;
+    padding: 1.2em 1.5em;
+    border: none;
+    text-transform: UPPERCASE;
+    font-weight: bold;
+    color: #fff;
+    -webkit-transition: background .3s ease;
+    transition: background .3s ease; }
+.add-to-cart:hover, .like:hover {
+    background: #b36800;
+    color: #fff; }
+
+.not-available {
+    text-align: center;
+    line-height: 2em; }
+.not-available:before {
+    font-family: fontawesome;
+    content: "\f00d";
+    color: #fff; }
+
+.orange {
+    background: #ff9f1a; }
+
+.green {
+    background: #85ad00; }
+
+.blue {
+    background: #0076ad; }
+
+.tooltip-inner {
+    padding: 1.3em; }
+
+@-webkit-keyframes opacity {
+    0% {
+        opacity: 0;
+        -webkit-transform: scale(3);
+        transform: scale(3); }
+    100% {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        transform: scale(1); } }
+
+@keyframes opacity {
+    0% {
+        opacity: 0;
+        -webkit-transform: scale(3);
+        transform: scale(3); }
+    100% {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        transform: scale(1); } }
+
+
 </style>

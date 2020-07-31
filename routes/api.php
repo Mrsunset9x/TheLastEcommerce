@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::namespace('api')->prefix('v1')->group(function(){
     Route::get('/product/{id}', 'ProductController@show');
     Route::get('/banner/', 'BannerController@index');
-
+    Route::get('/category','CategoryController@index');
     Route::middleware('api.auth')->group(function() {
         //Auth
         Route::post('me','AuthController@me');
@@ -31,16 +31,16 @@ Route::namespace('api')->prefix('v1')->group(function(){
         //Route::resource('/cart', 'carttController')->except('create', 'edit','show');
 
         //Banner
-        Route::post('banner/{status}/status','BannerController@deliverOrder');
         Route::post('/bannerimg','BannerController@upladImg');
-        Route::resource('banner','BannerController')->except('create','edit','index');
+        Route::put('banner/{id}','BannerController@update');
+        Route::resource('banner','BannerController')->except('create','edit','index','update');
 
         //order
         Route::patch('orders/{order}/deliver','OrderController@deliverOrder');
         Route::resource('order','OrderController')->except('create','edit');
 
         //Category
-        Route::resource('category','CategoryController')->except('create','edit');
+        Route::resource('category','CategoryController')->except('create','edit')->except('index');
 
         //Counpon
         Route::resource('coupon','CouponController')->except('create','edit');

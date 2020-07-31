@@ -7,6 +7,7 @@
     <meta name="csrf-token" content="{{  csrf_token()}}">
     <title>Clothes Shop</title>
     <link href=" {{ mix('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
           <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
    <link href="{{ asset('css/jquery-ui.min.css')}}" rel="stylesheet">
@@ -22,6 +23,7 @@
     <link href="{{ asset('css/style.css')}}" rel="stylesheet">
     <!--===============================================================================================-->
 <body>
+
     <div id="app">
         <app></app>
     </div>

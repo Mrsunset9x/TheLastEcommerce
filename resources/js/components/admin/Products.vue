@@ -218,6 +218,7 @@ export default {
             this.form.append('images', this.img);
             this.$axios.post(`/api/v1/deletemultipleimg`, this.form)
                 .then((res) => {
+                    console.log(res);
                     this.$forceUpdate();
                     this.Deletenotification();
                 }).catch((error) => {

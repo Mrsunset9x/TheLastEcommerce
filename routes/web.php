@@ -13,21 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/cart/{id}','Api\CartController@addProductToCart')->name('cartt');
+Route::get('/cart','Api\CartController@getAll');
 Route::middleware('api.auth')->group(function() {
-    Route::resource('/cart', 'Api\CartController');
+    Route::resource('/cart', 'Api\CartController')->except('index');
 });
-// Route::get('/', function () {
-//    return view('welcome');
-// });
-
-// Route::get('/admin','Api\AdminController@login');
-// Route::post('/postLogin','Api\AdminController@postLogin');
-
-// Auth::routes();
-
-// Route::get('/admin', function () {
-//     return view('home');
-// });
 
 Route::get('/{any}', function(){
         return view('landing');

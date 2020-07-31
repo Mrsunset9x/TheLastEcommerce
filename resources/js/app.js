@@ -5,10 +5,12 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/en';
 import CKEditor from 'ckeditor4-vue';
+import Bus from './Bus.js';
 
 Vue.use(VueRouter)
 Vue.use(ElementUI, {locale});
 Vue.use( CKEditor );
+Vue.use(Bus);
 
 import App from './views/App'
 import Home from './views/Home'
@@ -24,7 +26,6 @@ Vue.use(axios);
 axios.defaults.baseURL = 'http://127.0.0.1:8000/';
 axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('jwt')}`;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-// axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
 
 Vue.prototype.$axios = axios
 

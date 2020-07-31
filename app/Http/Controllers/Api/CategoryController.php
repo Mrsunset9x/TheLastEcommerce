@@ -33,12 +33,12 @@ class CategoryController extends Controller
             return response()->json([
                 'status' => true,
                 'code'   => Response::HTTP_OK,
-                'category'  => $category->items(),
-                'meta'   => [
-                    'total'       => $category->total(),
-                    'perPage'     => $category->perPage(),
-                    'currentPage' => $category->currentPage(),
-                ]
+                'category'  => $category,
+//                'meta'   => [
+//                    'total'       => $category->total(),
+//                    'perPage'     => $category->perPage(),
+//                    'currentPage' => $category->currentPage(),
+//                ]
             ]);
         }catch (\Exception $e)
         {

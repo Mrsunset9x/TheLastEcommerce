@@ -15,11 +15,14 @@ class CategoryRepository extends AbstractRepository implements ICategoryReposito
 
     public function getAll($request, $limit = null)
     {
-        $query = Category::query();
-        if ($query) {
-            $query->orderBy($request['column'], $request['sort']);
-        }
-        return $query->where('status', 1)->paginate($limit);
+//        $query = Category::query()->with('categories');
+//        if ($query) {
+//            $query->orderBy($request['column'], $request['sort']);
+//        }
+//        return $query->where('parent_id', 0)->paginate($limit);
+        return Category::with('categories')
+            ->where('parent_id',0)
+            ->get()->toArray();
     }
 
     public function create($attributes, int $id = null)

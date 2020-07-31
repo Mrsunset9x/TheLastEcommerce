@@ -15,6 +15,15 @@ use Symfony\Component\HttpFoundation\Response;
 class CartController extends Controller
 {
 
+    public function getAll()
+    {
+
+        return response()->json([
+            'cart' =>Cart::content(),
+            'total' =>Cart::content()->count()
+        ]);
+    }
+
     public function store(Request $request)
     {
         $data = $request->all();
@@ -79,7 +88,8 @@ class CartController extends Controller
             return response()->json([
                 'status' => true,
                 'code' => Response::HTTP_OK,
-                'InsideCart' =>Cart::content(),
+                'InsideCart' =>Cart::content()->groupBy('id'),
+                'total' =>Cart::content()->count(),
             ]);
         }catch (\Exception $e)
         {

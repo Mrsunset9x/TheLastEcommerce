@@ -167,6 +167,7 @@ export default {
             console.log('in create');
             this.$axios.post(`/api/v1/banner/`, this.bannerForm)
                 .then((res) => {
+                    console.log(res);
                     if (res.status === 200) {
                         this.$forceUpdate();
                         this.getBanner();
@@ -176,7 +177,7 @@ export default {
                             content: '',
                             link: '',
                             status: '',
-                            image: '',
+                            images: '',
                         };
                     }
                     this.drawer = false;
@@ -216,18 +217,6 @@ export default {
                 }
             )
         },
-
-
-        // deliver(index) {
-        //     let order = this.orders[index]
-        //     axios.patch(`/api/orders/${order.id}/deliver`)
-        //         .then(response => {
-        //             this.$forceUpdate()
-        //         })
-        //         .catch(error => {
-        //             console.error(error);
-        //         })
-        // },
 
         changePage(page) {
             this.currentPage = page;
