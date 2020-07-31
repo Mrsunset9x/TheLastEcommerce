@@ -19,7 +19,7 @@
                 <td v-model="product.units">{{ product.units }}</td>
                 <td v-model="product.price">{{ product.price }}</td>
                 <td v-model="product.category_id">{{ product.Catname }}</td>
-                <td><img v-model="product.image" :src="'/uploads/products/avatar/'+product.image" :alt="product.name">
+                <td><img v-model="product.image" :src="'/uploads/products/avatar/'+product.image" :alt="product.name" style="max-width: 150px;max-height: 150px">
                 </td>
                 <td>
                     <button class=" btn btn-success" @click="addMoreImg(product)">Add more</button>
@@ -110,20 +110,23 @@ export default {
     beforeMount() {
         this.getProducts();
     },
-
     methods: {
         newProduct() {
             this.addingProduct = {
                 name: null,
                 units: null,
                 price: null,
+                featured_products:null,
                 description: null,
-                image: null
+                image: null,
+                status:null,
+                category_id:null
             }
         },
         getProducts() {
             this.$axios.get(`/api/v1/product/?page=${this.currentPage}&${this.sort}`)
                 .then(response => {
+                    console.log(response);
                     this.products = response.data.product
                     this.totalRecord = response.data.meta.total
                 })
@@ -139,10 +142,12 @@ export default {
         },
 
         addProduct(product) {
+            console.log(product);
             this.addingProduct = null
             this.$axios.post("/api/v1/product/", {
                 category_id: product.category_id,
                 name: product.name,
+                featured_products:product.featured_products,
                 description: product.description,
                 price: product.price,
                 units: product.units,
@@ -150,8 +155,9 @@ export default {
                 status: product.status,
             })
                 .then(response => {
+                    this.AddNotification();
+                    console.log(response);
                     this.products.push(product);
-                    this.g
                 })
                 .catch(response => {
 
@@ -164,6 +170,7 @@ export default {
                 category_id: product.category_id,
                 name: product.name,
                 description: product.description,
+                featured_products:product.featured_products,
                 price: product.price,
                 units: product.units,
                 image: product.image,
@@ -244,6 +251,13 @@ export default {
                 message: h('i', {style: 'color: blue'}, 'Đã xoá hình ảnh thành công cho quý zị')
             });
         },
+        AddNotification() {
+            const h = this.$createElement;
+            this.$notify({
+                title: 'Thông Báo !',
+                message: h('i', {style: 'color: blue'}, 'Đã thêm sản phẩm thành công !')
+            });
+        },
     }
 }
 </script>
@@ -284,7 +298,7 @@ export default {
     top: 0;
     left: 0;
     font-size: 30px;
-    color:red;
+    color: red;
 }
 
 .icon {

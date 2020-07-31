@@ -44,7 +44,7 @@
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12" >
                     <div class="row">
                         <div class="col-md-4 product-box" v-for="(product,index) in products" @key="index"
                              v-if="product.featured_products === 1">
@@ -193,6 +193,7 @@ export default {
 .product-box {
     border: 1px solid #cccccc;
     padding: 10px 15px;
+
 }
 
 .hero-section {

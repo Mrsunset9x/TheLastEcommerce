@@ -3993,6 +3993,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     var _this = this;
@@ -4020,6 +4026,7 @@ __webpack_require__.r(__webpack_exports__);
           category_id: '',
           units: "",
           price: "",
+          featured_products: "",
           description: "",
           image: false,
           status: ''
@@ -4046,10 +4053,9 @@ __webpack_require__.r(__webpack_exports__);
           _this2.product.image = response.data;
 
           _this2.$emit('close', _this2.product);
-        })["catch"](err);
-        {
-          console.log(err);
-        }
+        })["catch"](function (res) {
+          console.log(res);
+        });
       } else {
         this.$emit('close', this.product);
       }
@@ -4186,14 +4192,18 @@ __webpack_require__.r(__webpack_exports__);
         name: null,
         units: null,
         price: null,
+        featured_products: null,
         description: null,
-        image: null
+        image: null,
+        status: null,
+        category_id: null
       };
     },
     getProducts: function getProducts() {
       var _this = this;
 
       this.$axios.get("/api/v1/product/?page=".concat(this.currentPage, "&").concat(this.sort)).then(function (response) {
+        console.log(response);
         _this.products = response.data.product;
         _this.totalRecord = response.data.meta.total;
       })["catch"](function (error) {
@@ -4208,19 +4218,23 @@ __webpack_require__.r(__webpack_exports__);
     addProduct: function addProduct(product) {
       var _this2 = this;
 
+      console.log(product);
       this.addingProduct = null;
       this.$axios.post("/api/v1/product/", {
         category_id: product.category_id,
         name: product.name,
+        featured_products: product.featured_products,
         description: product.description,
         price: product.price,
         units: product.units,
         image: product.image,
         status: product.status
       }).then(function (response) {
-        _this2.products.push(product);
+        _this2.AddNotification();
 
-        _this2.g;
+        console.log(response);
+
+        _this2.products.push(product);
       })["catch"](function (response) {});
     },
     endEditing: function endEditing(product) {
@@ -4232,6 +4246,7 @@ __webpack_require__.r(__webpack_exports__);
         category_id: product.category_id,
         name: product.name,
         description: product.description,
+        featured_products: product.featured_products,
         price: product.price,
         units: product.units,
         image: product.image,
@@ -4329,6 +4344,15 @@ __webpack_require__.r(__webpack_exports__);
         message: h('i', {
           style: 'color: blue'
         }, 'Đã xoá hình ảnh thành công cho quý zị')
+      });
+    },
+    AddNotification: function AddNotification() {
+      var h = this.$createElement;
+      this.$notify({
+        title: 'Thông Báo !',
+        message: h('i', {
+          style: 'color: blue'
+        }, 'Đã thêm sản phẩm thành công !')
       });
     }
   }
@@ -7524,7 +7548,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.abv[data-v-0bd40bd7] {\n}\n.submitupdate[data-v-0bd40bd7] {\n    margin-top: 50px;\n}\n\n/*.noenmodel {*/\n/*    transition: inherit;*/\n\n/*}*/\n", ""]);
+exports.push([module.i, "\n.abv[data-v-0bd40bd7] {\n}\n.submitupdate[data-v-0bd40bd7] {\r\n    margin-top: 50px;\n}\r\n\r\n/*.noenmodel {*/\r\n/*    transition: inherit;*/\r\n\r\n/*}*/\r\n", ""]);
 
 // exports
 
@@ -7543,7 +7567,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.big-text[data-v-137c6ca4] {\n    font-size: 28px;\n}\n.product-box[data-v-137c6ca4] {\n    border: 1px solid #cccccc;\n    padding: 10px 15px;\n    height: 20vh\n}\n", ""]);
+exports.push([module.i, "\n.big-text[data-v-137c6ca4] {\r\n    font-size: 28px;\n}\n.product-box[data-v-137c6ca4] {\r\n    border: 1px solid #cccccc;\r\n    padding: 10px 15px;\r\n    height: 20vh\n}\r\n", ""]);
 
 // exports
 
@@ -7581,7 +7605,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.noenmodel[data-v-897a6d62] {\n    transition: inherit;\n}\n.submit[data-v-897a6d62] {\n    padding-top: 15px;\n    margin-left: 39%;\n}\n.el-carousel__item h3[data-v-897a6d62] {\n    color: #475669;\n    font-size: 14px;\n    opacity: 0.75;\n    line-height: 150px;\n    margin: 0;\n}\n.block[data-v-897a6d62] {\n    padding-left: 10px;\n}\n.imgSide[data-v-897a6d62] {\n    position: relative;\n}\n.imgSide img[data-v-897a6d62] {\n    display: block;\n}\n.imgSide .fa-times[data-v-897a6d62] {\n    position: absolute;\n    top: 0;\n    left: 0;\n    font-size: 30px;\n    color:red;\n}\n.icon[data-v-897a6d62] {\n    position: fixed;\n    bottom: 0;\n    right: 0;\n    top: 0;\n    width: 50px;\n    border-radius: 35px;\n    border: 3px solid #73AD21;\n}\n", ""]);
+exports.push([module.i, "\n.noenmodel[data-v-897a6d62] {\n    transition: inherit;\n}\n.submit[data-v-897a6d62] {\n    padding-top: 15px;\n    margin-left: 39%;\n}\n.el-carousel__item h3[data-v-897a6d62] {\n    color: #475669;\n    font-size: 14px;\n    opacity: 0.75;\n    line-height: 150px;\n    margin: 0;\n}\n.block[data-v-897a6d62] {\n    padding-left: 10px;\n}\n.imgSide[data-v-897a6d62] {\n    position: relative;\n}\n.imgSide img[data-v-897a6d62] {\n    display: block;\n}\n.imgSide .fa-times[data-v-897a6d62] {\n    position: absolute;\n    top: 0;\n    left: 0;\n    font-size: 30px;\n    color: red;\n}\n.icon[data-v-897a6d62] {\n    position: fixed;\n    bottom: 0;\n    right: 0;\n    top: 0;\n    width: 50px;\n    border-radius: 35px;\n    border: 3px solid #73AD21;\n}\n", ""]);
 
 // exports
 
@@ -7600,7 +7624,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.footer[data-v-91ac6b5c] {\n    background: #b9e2fc;\n    color: black;\n}\n.container[data-v-91ac6b5c] {\n    max-width: 1140px;\n}\n\n\n", ""]);
+exports.push([module.i, "\n.footer[data-v-91ac6b5c] {\r\n    background: #b9e2fc;\r\n    color: black;\n}\n.container[data-v-91ac6b5c] {\r\n    max-width: 1140px;\n}\r\n\r\n\r\n", ""]);
 
 // exports
 
@@ -7695,7 +7719,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.small-text[data-v-55d32178] {\n    font-size: 18px;\n}\n.title[data-v-55d32178] {\n    font-size: 36px;\n    margin-left: 30px;\n}\n.demonstration[data-v-55d32178] {\n    display: flex;\n}\nimg[data-v-55d32178] {\n    max-width: 100%;\n}\n.preview[data-v-55d32178] {\n    display: flex;\n    flex-direction: column;\n}\n@media screen and (max-width: 996px) {\n.preview[data-v-55d32178] {\n        margin-bottom: 20px;\n}\n}\n.preview-pic[data-v-55d32178] {\n    flex-grow: 1;\n}\n.preview-thumbnail.nav-tabs[data-v-55d32178] {\n    border: none;\n    margin-top: 15px;\n}\n.preview-thumbnail.nav-tabs li[data-v-55d32178] {\n    width: 18%;\n    margin-right: 2.5%;\n}\n.preview-thumbnail.nav-tabs li img[data-v-55d32178] {\n    max-width: 100%;\n    display: block;\n}\n.preview-thumbnail.nav-tabs li a[data-v-55d32178] {\n    padding: 0;\n    margin: 0;\n}\n.preview-thumbnail.nav-tabs li[data-v-55d32178]:last-of-type {\n    margin-right: 0;\n}\n.tab-content[data-v-55d32178] {\n    overflow: hidden;\n}\n.tab-content img[data-v-55d32178] {\n    width: 100%;\n    -webkit-animation-name: opacity-data-v-55d32178;\n    animation-name: opacity-data-v-55d32178;\n    -webkit-animation-duration: .3s;\n    animation-duration: .3s;\n}\n.card[data-v-55d32178] {\n    margin-top: 50px;\n    background: #eee;\n    padding: 3em;\n    line-height: 1.5em;\n}\n@media screen and (min-width: 997px) {\n.wrapper[data-v-55d32178] {\n        display: flex;\n}\n}\n.details[data-v-55d32178] {\n    display: flex;\n    flex-direction: column;\n}\n.colors[data-v-55d32178] {\n    flex-grow: 1;\n}\n.product-title[data-v-55d32178], .price[data-v-55d32178], .sizes[data-v-55d32178], .colors[data-v-55d32178] {\n    text-transform: UPPERCASE;\n    font-weight: bold;\n}\n.checked[data-v-55d32178], .price span[data-v-55d32178] {\n    color: #ff9f1a;\n}\n.product-title[data-v-55d32178], .rating[data-v-55d32178], .product-description[data-v-55d32178], .price[data-v-55d32178], .vote[data-v-55d32178], .sizes[data-v-55d32178] {\n    margin-bottom: 15px;\n}\n.product-title[data-v-55d32178] {\n    margin-top: 0;\n}\n.size[data-v-55d32178] {\n    margin-right: 10px;\n}\n.size[data-v-55d32178]:first-of-type {\n    margin-left: 40px;\n}\n.color[data-v-55d32178] {\n    display: inline-block;\n    vertical-align: middle;\n    margin-right: 10px;\n    height: 2em;\n    width: 2em;\n    border-radius: 2px;\n}\n.color[data-v-55d32178]:first-of-type {\n    margin-left: 20px;\n}\n.add-to-cart[data-v-55d32178], .like[data-v-55d32178] {\n    background: #ff9f1a;\n    padding: 1.2em 1.5em;\n    border: none;\n    text-transform: UPPERCASE;\n    font-weight: bold;\n    color: #fff;\n    transition: background .3s ease;\n}\n.add-to-cart[data-v-55d32178]:hover, .like[data-v-55d32178]:hover {\n    background: #b36800;\n    color: #fff;\n}\n.not-available[data-v-55d32178] {\n    text-align: center;\n    line-height: 2em;\n}\n.not-available[data-v-55d32178]:before {\n    font-family: fontawesome;\n    content: \"\\F00D\";\n    color: #fff;\n}\n.orange[data-v-55d32178] {\n    background: #ff9f1a;\n}\n.green[data-v-55d32178] {\n    background: #85ad00;\n}\n.blue[data-v-55d32178] {\n    background: #0076ad;\n}\n.tooltip-inner[data-v-55d32178] {\n    padding: 1.3em;\n}\n@-webkit-keyframes opacity-data-v-55d32178 {\n0% {\n        opacity: 0;\n        transform: scale(3);\n}\n100% {\n        opacity: 1;\n        transform: scale(1);\n}\n}\n@keyframes opacity-data-v-55d32178 {\n0% {\n        opacity: 0;\n        transform: scale(3);\n}\n100% {\n        opacity: 1;\n        transform: scale(1);\n}\n}\n\n\n", ""]);
+exports.push([module.i, "\n.small-text[data-v-55d32178] {\r\n    font-size: 18px;\n}\n.title[data-v-55d32178] {\r\n    font-size: 36px;\r\n    margin-left: 30px;\n}\n.demonstration[data-v-55d32178] {\r\n    display: flex;\n}\nimg[data-v-55d32178] {\r\n    max-width: 100%;\n}\n.preview[data-v-55d32178] {\r\n    display: flex;\r\n    flex-direction: column;\n}\n@media screen and (max-width: 996px) {\n.preview[data-v-55d32178] {\r\n        margin-bottom: 20px;\n}\n}\n.preview-pic[data-v-55d32178] {\r\n    flex-grow: 1;\n}\n.preview-thumbnail.nav-tabs[data-v-55d32178] {\r\n    border: none;\r\n    margin-top: 15px;\n}\n.preview-thumbnail.nav-tabs li[data-v-55d32178] {\r\n    width: 18%;\r\n    margin-right: 2.5%;\n}\n.preview-thumbnail.nav-tabs li img[data-v-55d32178] {\r\n    max-width: 100%;\r\n    display: block;\n}\n.preview-thumbnail.nav-tabs li a[data-v-55d32178] {\r\n    padding: 0;\r\n    margin: 0;\n}\n.preview-thumbnail.nav-tabs li[data-v-55d32178]:last-of-type {\r\n    margin-right: 0;\n}\n.tab-content[data-v-55d32178] {\r\n    overflow: hidden;\n}\n.tab-content img[data-v-55d32178] {\r\n    width: 100%;\r\n    -webkit-animation-name: opacity-data-v-55d32178;\r\n    animation-name: opacity-data-v-55d32178;\r\n    -webkit-animation-duration: .3s;\r\n    animation-duration: .3s;\n}\n.card[data-v-55d32178] {\r\n    margin-top: 50px;\r\n    background: #eee;\r\n    padding: 3em;\r\n    line-height: 1.5em;\n}\n@media screen and (min-width: 997px) {\n.wrapper[data-v-55d32178] {\r\n        display: flex;\n}\n}\n.details[data-v-55d32178] {\r\n    display: flex;\r\n    flex-direction: column;\n}\n.colors[data-v-55d32178] {\r\n    flex-grow: 1;\n}\n.product-title[data-v-55d32178], .price[data-v-55d32178], .sizes[data-v-55d32178], .colors[data-v-55d32178] {\r\n    text-transform: UPPERCASE;\r\n    font-weight: bold;\n}\n.checked[data-v-55d32178], .price span[data-v-55d32178] {\r\n    color: #ff9f1a;\n}\n.product-title[data-v-55d32178], .rating[data-v-55d32178], .product-description[data-v-55d32178], .price[data-v-55d32178], .vote[data-v-55d32178], .sizes[data-v-55d32178] {\r\n    margin-bottom: 15px;\n}\n.product-title[data-v-55d32178] {\r\n    margin-top: 0;\n}\n.size[data-v-55d32178] {\r\n    margin-right: 10px;\n}\n.size[data-v-55d32178]:first-of-type {\r\n    margin-left: 40px;\n}\n.color[data-v-55d32178] {\r\n    display: inline-block;\r\n    vertical-align: middle;\r\n    margin-right: 10px;\r\n    height: 2em;\r\n    width: 2em;\r\n    border-radius: 2px;\n}\n.color[data-v-55d32178]:first-of-type {\r\n    margin-left: 20px;\n}\n.add-to-cart[data-v-55d32178], .like[data-v-55d32178] {\r\n    background: #ff9f1a;\r\n    padding: 1.2em 1.5em;\r\n    border: none;\r\n    text-transform: UPPERCASE;\r\n    font-weight: bold;\r\n    color: #fff;\r\n    transition: background .3s ease;\n}\n.add-to-cart[data-v-55d32178]:hover, .like[data-v-55d32178]:hover {\r\n    background: #b36800;\r\n    color: #fff;\n}\n.not-available[data-v-55d32178] {\r\n    text-align: center;\r\n    line-height: 2em;\n}\n.not-available[data-v-55d32178]:before {\r\n    font-family: fontawesome;\r\n    content: \"\\F00D\";\r\n    color: #fff;\n}\n.orange[data-v-55d32178] {\r\n    background: #ff9f1a;\n}\n.green[data-v-55d32178] {\r\n    background: #85ad00;\n}\n.blue[data-v-55d32178] {\r\n    background: #0076ad;\n}\n.tooltip-inner[data-v-55d32178] {\r\n    padding: 1.3em;\n}\n@-webkit-keyframes opacity-data-v-55d32178 {\n0% {\r\n        opacity: 0;\r\n        transform: scale(3);\n}\n100% {\r\n        opacity: 1;\r\n        transform: scale(1);\n}\n}\n@keyframes opacity-data-v-55d32178 {\n0% {\r\n        opacity: 0;\r\n        transform: scale(3);\n}\n100% {\r\n        opacity: 1;\r\n        transform: scale(1);\n}\n}\r\n\r\n\r\n", ""]);
 
 // exports
 
@@ -68190,11 +68214,11 @@ var render = function() {
           2
         ),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "modal-body" },
-          [
-            _vm._t("body", [
+        _c("div", { staticClass: "modal-body" }, [
+          _c(
+            "div",
+            { attrs: { name: "body" } },
+            [
               _c("div", [
                 _vm._v("Name: "),
                 _c("input", {
@@ -68220,7 +68244,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("br"),
-              _vm._v("\n                            Category :"),
+              _vm._v("\n                    Category :\n                    "),
               _vm._l(_vm.category, function(item, index) {
                 return _c("div", [
                   _c("input", {
@@ -68300,7 +68324,7 @@ var render = function() {
               _vm._v(" "),
               _c("br"),
               _vm._v(
-                "\n                            Description:\n                            "
+                "\n                    Description:\n                    "
               ),
               _c("br"),
               _vm._v(" "),
@@ -68341,46 +68365,93 @@ var render = function() {
               _vm._v(" "),
               _c("br"),
               _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.data.status,
-                    expression: "data.status"
+              _c("div", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.data.featured_products,
+                      expression: "data.featured_products"
+                    }
+                  ],
+                  attrs: { type: "radio", value: "1" },
+                  domProps: {
+                    checked: _vm._q(_vm.data.featured_products, "1")
+                  },
+                  on: {
+                    change: function($event) {
+                      return _vm.$set(_vm.data, "featured_products", "1")
+                    }
                   }
-                ],
-                attrs: { type: "radio", value: "1" },
-                domProps: { checked: _vm._q(_vm.data.status, "1") },
-                on: {
-                  change: function($event) {
-                    return _vm.$set(_vm.data, "status", "1")
+                }),
+                _vm._v(" Sản phẩm nổi bật\n                        "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.data.featured_products,
+                      expression: "data.featured_products"
+                    }
+                  ],
+                  attrs: { type: "radio", value: "null" },
+                  domProps: {
+                    checked: _vm._q(_vm.data.featured_products, "null")
+                  },
+                  on: {
+                    change: function($event) {
+                      return _vm.$set(_vm.data, "featured_products", "null")
+                    }
                   }
-                }
-              }),
-              _vm._v(" Hiển thị\n                            "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.data.status,
-                    expression: "data.status"
+                }),
+                _vm._v(" Bỏ sản phẩm nổi bật")
+              ]),
+              _vm._v(" "),
+              _c("hr"),
+              _vm._v(" "),
+              _c("div", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.data.status,
+                      expression: "data.status"
+                    }
+                  ],
+                  attrs: { type: "radio", value: "1" },
+                  domProps: { checked: _vm._q(_vm.data.status, "1") },
+                  on: {
+                    change: function($event) {
+                      return _vm.$set(_vm.data, "status", "1")
+                    }
                   }
-                ],
-                attrs: { type: "radio", value: "0" },
-                domProps: { checked: _vm._q(_vm.data.status, "0") },
-                on: {
-                  change: function($event) {
-                    return _vm.$set(_vm.data, "status", "0")
+                }),
+                _vm._v(" Hiển thị\n                    "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.data.status,
+                      expression: "data.status"
+                    }
+                  ],
+                  attrs: { type: "radio", value: "0" },
+                  domProps: { checked: _vm._q(_vm.data.status, "0") },
+                  on: {
+                    change: function($event) {
+                      return _vm.$set(_vm.data, "status", "0")
+                    }
                   }
-                }
-              }),
-              _vm._v(" Không hiển thị\n                        ")
-            ])
-          ],
-          2
-        ),
+                }),
+                _vm._v(" Không hiển thị\n                    ")
+              ])
+            ],
+            2
+          )
+        ]),
         _vm._v(" "),
         _c(
           "div",
@@ -68406,7 +68477,7 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\n                                Finish\n                            "
+                    "\n                        Finish\n                    "
                   )
                 ]
               )
@@ -68515,6 +68586,10 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [
                     _c("img", {
+                      staticStyle: {
+                        "max-width": "150px",
+                        "max-height": "150px"
+                      },
                       attrs: {
                         src: "/uploads/products/avatar/" + product.image,
                         alt: product.name

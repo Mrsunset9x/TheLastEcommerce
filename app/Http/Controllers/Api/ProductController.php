@@ -159,7 +159,7 @@ class ProductController extends Controller
                 $extension = $image_tmp->getClientOriginalExtension();
                  $fileName = $request->image = rand(111, 99999) . '.' . $extension;
                 $image_path = 'uploads/products/avatar/' . $fileName;
-                Image::make($image_tmp)->resize(150, 150)->save($image_path);
+                Image::make($image_tmp)->resize(300, 300)->save($image_path);
             }
             return $fileName;
         }
