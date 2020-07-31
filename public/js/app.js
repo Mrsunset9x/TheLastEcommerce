@@ -7624,7 +7624,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.footer[data-v-91ac6b5c] {\r\n    background: #b9e2fc;\r\n    color: black;\n}\n.container[data-v-91ac6b5c] {\r\n    max-width: 1140px;\n}\r\n\r\n\r\n", ""]);
+exports.push([module.i, "\n.footer[data-v-91ac6b5c] {\n    background: #b9e2fc;\n    color: black;\n}\n.container[data-v-91ac6b5c] {\n    max-width: 1140px;\n}\n\n\n", ""]);
 
 // exports
 
@@ -69382,8 +69382,7 @@ var render = function() {
                                                     staticClass:
                                                       "img-responsive",
                                                     attrs: {
-                                                      src:
-                                                        "http://hocwebgiare.com/thiet_ke_web_chuan_demo/shopping_cart/images/090.jpg",
+                                                      src: "",
                                                       alt: "Sản phẩm 1",
                                                       width: "100"
                                                     }
@@ -69495,8 +69494,7 @@ var render = function() {
                                                     staticClass:
                                                       "img-responsive",
                                                     attrs: {
-                                                      src:
-                                                        "http://hocwebgiare.com/thiet_ke_web_chuan_demo/shopping_cart/images/174.jpg",
+                                                      src: "",
                                                       alt: "Sản phẩm 1",
                                                       width: "100"
                                                     }

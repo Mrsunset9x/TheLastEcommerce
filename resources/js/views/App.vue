@@ -58,7 +58,7 @@
                                                 <td data-th="Product">
                                                     <div class="row">
                                                         <div class="col-sm-2 hidden-xs"><img
-                                                            src="http://hocwebgiare.com/thiet_ke_web_chuan_demo/shopping_cart/images/090.jpg"
+                                                            src=""
                                                             alt="Sản phẩm 1" class="img-responsive" width="100">
                                                         </div>
                                                         <div class="col-sm-10">
@@ -83,7 +83,7 @@
                                                 <td data-th="Product">
                                                     <div class="row">
                                                         <div class="col-sm-2 hidden-xs"><img
-                                                            src="http://hocwebgiare.com/thiet_ke_web_chuan_demo/shopping_cart/images/174.jpg"
+                                                            src=""
                                                             alt="Sản phẩm 1" class="img-responsive" width="100">
                                                         </div>
                                                         <div class="col-sm-10">
