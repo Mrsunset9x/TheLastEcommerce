@@ -55,9 +55,7 @@
                                 <div class="text">
                                     Message *
                                 </div>
-                                <!-- NOTE: Due to more textarea tag I got an error. So I changed the textarea name to changeit. Please change that changeit name to textarea -->
                                 <textarea id=".msgForm" rows="2" cols="25" required ></textarea>
-                                <!-- replace this changeit name to textarea -->
                                 <br/>
                                 <div class="btn">
                                     <button type="submit">Send</button>
@@ -78,7 +76,18 @@
 
 <script>
 export default {
-name: "Footer"
+name: "Footer",
+    data (){
+    return {
+        abc: ''
+    }
+    },
+    created() {
+        this.$on('level',value=>{
+            this.abc = value
+        })
+
+    }
 }
 </script>
 
@@ -107,6 +116,7 @@ name: "Footer"
     color: #202020;
 }
 footer{
+    position:static;
     bottom: 0px;
     width: 100%;
     background: #111;

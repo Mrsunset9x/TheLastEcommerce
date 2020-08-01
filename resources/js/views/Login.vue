@@ -57,8 +57,10 @@ export default {
             if (this.user.password.length > 0) {
                 this.$axios.post('http://localhost:8000/api/v1/login', this.user)
                     .then(response => {
+                        console.log('abc');
                         if (response.data.code === 200) {
-                            let level = response.data.user.level
+                            const level = response.data.user.level
+                           this.$bus.emit('level',level);
                             localStorage.setItem('jwt', response.data.jwt)
                             localStorage.setItem('user', JSON.stringify(response.data.user))
 

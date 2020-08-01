@@ -5038,10 +5038,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Footer"
+  name: "Footer",
+  data: function data() {
+    return {
+      abc: ''
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    this.$on('level', function (value) {
+      _this.abc = value;
+    });
+  }
 });
 
 /***/ }),
@@ -5316,8 +5326,13 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.user.password.length > 0) {
         this.$axios.post('http://localhost:8000/api/v1/login', this.user).then(function (response) {
+          console.log('abc');
+
           if (response.data.code === 200) {
             var level = response.data.user.level;
+
+            _this.$bus.emit('level', level);
+
             localStorage.setItem('jwt', response.data.jwt);
             localStorage.setItem('user', JSON.stringify(response.data.user));
 
@@ -7681,7 +7696,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\n*[data-v-0b2929fa]{\n    margin: 0;\n    padding: 0;\n    color: #d9d9d9;\n    box-sizing: border-box;\n    font-family: 'Poppins', sans-serif;\n}\n.content1[data-v-0b2929fa]{\n    margin: 130px auto;\n    text-align: center;\n    padding: 0 20px;\n}\n.content1 .text[data-v-0b2929fa]{\n    font-size: 2.5rem;\n    font-weight: 600;\n    color: #202020;\n}\n.content1 .p[data-v-0b2929fa]{\n    font-size: 2.1875rem;\n    font-weight: 600;\n    color: #202020;\n}\nfooter[data-v-0b2929fa]{\n    bottom: 0px;\n    width: 100%;\n    background: #111;\n}\n.main-content[data-v-0b2929fa]{\n    display: flex;\n}\n.main-content .box[data-v-0b2929fa]{\n    flex-basis: 50%;\n    padding: 10px 20px;\n}\n.box h2[data-v-0b2929fa]{\n    font-size: 1.125rem;\n    font-weight: 600;\n    text-transform: uppercase;\n}\n.box .content[data-v-0b2929fa]{\n    margin: 20px 0 0 0;\n    position: relative;\n}\n.box .content[data-v-0b2929fa]:before{\n    position: absolute;\n    content: '';\n    top: -10px;\n    height: 2px;\n    width: 100%;\n    background: #1a1a1a;\n}\n.box .content[data-v-0b2929fa]:after{\n    position: absolute;\n    content: '';\n    height: 2px;\n    width: 15%;\n    background: #f12020;\n    top: -10px;\n}\n.left .content p[data-v-0b2929fa]{\n    text-align: justify;\n}\n.left .content .social[data-v-0b2929fa]{\n    margin: 20px 0 0 0;\n}\n.left .content .social a[data-v-0b2929fa]{\n    padding: 0 2px;\n}\n.left .content .social a span[data-v-0b2929fa]{\n    height: 40px;\n    width: 40px;\n    background: #1a1a1a;\n    line-height: 40px;\n    text-align: center;\n    font-size: 18px;\n    border-radius: 5px;\n    transition: 0.3s;\n}\n.left .content .social a span[data-v-0b2929fa]:hover{\n    background: #f12020;\n}\n.center .content .fas[data-v-0b2929fa]{\n    font-size: 1.4375rem;\n    background: #1a1a1a;\n    height: 45px;\n    width: 45px;\n    line-height: 45px;\n    text-align: center;\n    border-radius: 50%;\n    transition: 0.3s;\n    cursor: pointer;\n}\n.center .content .fas[data-v-0b2929fa]:hover{\n    background: #f12020;\n}\n.center .content .text[data-v-0b2929fa]{\n    font-size: 1.0625rem;\n    font-weight: 500;\n    padding-left: 10px;\n}\n.center .content .phone[data-v-0b2929fa]{\n    margin: 15px 0;\n}\n.right form .text[data-v-0b2929fa]{\n    font-size: 1.0625rem;\n    margin-bottom: 2px;\n    color: #656565;\n}\n.right form .msg[data-v-0b2929fa]{\n    margin-top: 10px;\n}\n.right form input[data-v-0b2929fa], .right form .msgForm[data-v-0b2929fa]{\n    width: 100%;\n    font-size: 1.0625rem;\n    background: #151515;\n    padding-left: 10px;\n    border: 1px solid #222222;\n}\n.right form input[data-v-0b2929fa]:focus,\n.right form .msgForm[data-v-0b2929fa]:focus{\n    outline-color: #3498db;\n}\n.right form input[data-v-0b2929fa]{\n    height: 35px;\n}\n.right form .btn[data-v-0b2929fa]{\n    margin-top: 10px;\n}\n.right form .btn button[data-v-0b2929fa]{\n    height: 40px;\n    width: 100%;\n    border: none;\n    outline: none;\n    background: #f12020;\n    font-size: 1.0625rem;\n    font-weight: 500;\n    cursor: pointer;\n    transition: .3s;\n}\n.right form .btn button[data-v-0b2929fa]:hover{\n    background: #000;\n}\n.bottom center[data-v-0b2929fa]{\n    padding: 5px;\n    font-size: 0.9375rem;\n    background: #151515;\n}\n.bottom center span[data-v-0b2929fa]{\n    color: #656565;\n}\n.bottom center a[data-v-0b2929fa]{\n    color: #f12020;\n    text-decoration: none;\n}\n.bottom center a[data-v-0b2929fa]:hover{\n    text-decoration: underline;\n}\n@media screen and (max-width: 900px) {\nfooter[data-v-0b2929fa]{\n        position: relative;\n        bottom: 0px;\n}\n.main-content[data-v-0b2929fa]{\n        flex-wrap: wrap;\n        flex-direction: column;\n}\n.main-content .box[data-v-0b2929fa]{\n        margin: 5px 0;\n}\n}\n\n", ""]);
+exports.push([module.i, "\n*[data-v-0b2929fa]{\n    margin: 0;\n    padding: 0;\n    color: #d9d9d9;\n    box-sizing: border-box;\n    font-family: 'Poppins', sans-serif;\n}\n.content1[data-v-0b2929fa]{\n    margin: 130px auto;\n    text-align: center;\n    padding: 0 20px;\n}\n.content1 .text[data-v-0b2929fa]{\n    font-size: 2.5rem;\n    font-weight: 600;\n    color: #202020;\n}\n.content1 .p[data-v-0b2929fa]{\n    font-size: 2.1875rem;\n    font-weight: 600;\n    color: #202020;\n}\nfooter[data-v-0b2929fa]{\n    position:static;\n    bottom: 0px;\n    width: 100%;\n    background: #111;\n}\n.main-content[data-v-0b2929fa]{\n    display: flex;\n}\n.main-content .box[data-v-0b2929fa]{\n    flex-basis: 50%;\n    padding: 10px 20px;\n}\n.box h2[data-v-0b2929fa]{\n    font-size: 1.125rem;\n    font-weight: 600;\n    text-transform: uppercase;\n}\n.box .content[data-v-0b2929fa]{\n    margin: 20px 0 0 0;\n    position: relative;\n}\n.box .content[data-v-0b2929fa]:before{\n    position: absolute;\n    content: '';\n    top: -10px;\n    height: 2px;\n    width: 100%;\n    background: #1a1a1a;\n}\n.box .content[data-v-0b2929fa]:after{\n    position: absolute;\n    content: '';\n    height: 2px;\n    width: 15%;\n    background: #f12020;\n    top: -10px;\n}\n.left .content p[data-v-0b2929fa]{\n    text-align: justify;\n}\n.left .content .social[data-v-0b2929fa]{\n    margin: 20px 0 0 0;\n}\n.left .content .social a[data-v-0b2929fa]{\n    padding: 0 2px;\n}\n.left .content .social a span[data-v-0b2929fa]{\n    height: 40px;\n    width: 40px;\n    background: #1a1a1a;\n    line-height: 40px;\n    text-align: center;\n    font-size: 18px;\n    border-radius: 5px;\n    transition: 0.3s;\n}\n.left .content .social a span[data-v-0b2929fa]:hover{\n    background: #f12020;\n}\n.center .content .fas[data-v-0b2929fa]{\n    font-size: 1.4375rem;\n    background: #1a1a1a;\n    height: 45px;\n    width: 45px;\n    line-height: 45px;\n    text-align: center;\n    border-radius: 50%;\n    transition: 0.3s;\n    cursor: pointer;\n}\n.center .content .fas[data-v-0b2929fa]:hover{\n    background: #f12020;\n}\n.center .content .text[data-v-0b2929fa]{\n    font-size: 1.0625rem;\n    font-weight: 500;\n    padding-left: 10px;\n}\n.center .content .phone[data-v-0b2929fa]{\n    margin: 15px 0;\n}\n.right form .text[data-v-0b2929fa]{\n    font-size: 1.0625rem;\n    margin-bottom: 2px;\n    color: #656565;\n}\n.right form .msg[data-v-0b2929fa]{\n    margin-top: 10px;\n}\n.right form input[data-v-0b2929fa], .right form .msgForm[data-v-0b2929fa]{\n    width: 100%;\n    font-size: 1.0625rem;\n    background: #151515;\n    padding-left: 10px;\n    border: 1px solid #222222;\n}\n.right form input[data-v-0b2929fa]:focus,\n.right form .msgForm[data-v-0b2929fa]:focus{\n    outline-color: #3498db;\n}\n.right form input[data-v-0b2929fa]{\n    height: 35px;\n}\n.right form .btn[data-v-0b2929fa]{\n    margin-top: 10px;\n}\n.right form .btn button[data-v-0b2929fa]{\n    height: 40px;\n    width: 100%;\n    border: none;\n    outline: none;\n    background: #f12020;\n    font-size: 1.0625rem;\n    font-weight: 500;\n    cursor: pointer;\n    transition: .3s;\n}\n.right form .btn button[data-v-0b2929fa]:hover{\n    background: #000;\n}\n.bottom center[data-v-0b2929fa]{\n    padding: 5px;\n    font-size: 0.9375rem;\n    background: #151515;\n}\n.bottom center span[data-v-0b2929fa]{\n    color: #656565;\n}\n.bottom center a[data-v-0b2929fa]{\n    color: #f12020;\n    text-decoration: none;\n}\n.bottom center a[data-v-0b2929fa]:hover{\n    text-decoration: underline;\n}\n@media screen and (max-width: 900px) {\nfooter[data-v-0b2929fa]{\n        position: relative;\n        bottom: 0px;\n}\n.main-content[data-v-0b2929fa]{\n        flex-wrap: wrap;\n        flex-direction: column;\n}\n.main-content .box[data-v-0b2929fa]{\n        margin: 5px 0;\n}\n}\n\n", ""]);
 
 // exports
 
