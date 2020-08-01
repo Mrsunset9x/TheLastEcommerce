@@ -10,7 +10,13 @@
                     </h2>
                     <div class="content">
                         <p>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                            galley of type and scrambled it to make a type specimen book. It has survived not only five
+                            centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                            passages, and more recently with desktop publishing software like Aldus PageMaker including
+                            versions of Lorem Ipsum.
                         </p>
                         <div class="social">
                             <a href="https://facebook.com/coding.np"><span class="fab fa-facebook-f"></span></a>
@@ -55,7 +61,7 @@
                                 <div class="text">
                                     Message *
                                 </div>
-                                <textarea id=".msgForm" rows="2" cols="25" required ></textarea>
+                                <textarea id=".msgForm" rows="2" cols="25" required></textarea>
                                 <br/>
                                 <div class="btn">
                                     <button type="submit">Send</button>
@@ -76,68 +82,73 @@
 
 <script>
 export default {
-name: "Footer",
-    data (){
-    return {
-        abc: ''
-    }
+    name: "Footer",
+    data() {
+        return {
+            allThe: '',
+        }
     },
-    created() {
-        this.$on('level',value=>{
-            this.abc = value
-        })
 
-    }
 }
 </script>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
-*{
+
+* {
     margin: 0;
     padding: 0;
     color: #d9d9d9;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
-.content1{
+
+.content1 {
     margin: 130px auto;
     text-align: center;
     padding: 0 20px;
 }
-.content1 .text{
+
+.content1 .text {
     font-size: 2.5rem;
     font-weight: 600;
     color: #202020;
 }
-.content1 .p{
+
+.content1 .p {
     font-size: 2.1875rem;
     font-weight: 600;
     color: #202020;
 }
-footer{
-    position:static;
+
+footer {
+    position: static;
     bottom: 0px;
     width: 100%;
     background: #111;
 }
-.main-content{
+
+.main-content {
     display: flex;
 }
-.main-content .box{
+
+.main-content .box {
     flex-basis: 50%;
     padding: 10px 20px;
 }
-.box h2{
+
+.box h2 {
     font-size: 1.125rem;
     font-weight: 600;
     text-transform: uppercase;
 }
-.box .content{
+
+.box .content {
     margin: 20px 0 0 0;
     position: relative;
 }
-.box .content:before{
+
+.box .content:before {
     position: absolute;
     content: '';
     top: -10px;
@@ -145,7 +156,8 @@ footer{
     width: 100%;
     background: #1a1a1a;
 }
-.box .content:after{
+
+.box .content:after {
     position: absolute;
     content: '';
     height: 2px;
@@ -153,16 +165,20 @@ footer{
     background: #f12020;
     top: -10px;
 }
-.left .content p{
+
+.left .content p {
     text-align: justify;
 }
-.left .content .social{
+
+.left .content .social {
     margin: 20px 0 0 0;
 }
-.left .content .social a{
+
+.left .content .social a {
     padding: 0 2px;
 }
-.left .content .social a span{
+
+.left .content .social a span {
     height: 40px;
     width: 40px;
     background: #1a1a1a;
@@ -172,10 +188,12 @@ footer{
     border-radius: 5px;
     transition: 0.3s;
 }
-.left .content .social a span:hover{
+
+.left .content .social a span:hover {
     background: #f12020;
 }
-.center .content .fas{
+
+.center .content .fas {
     font-size: 1.4375rem;
     background: #1a1a1a;
     height: 45px;
@@ -186,43 +204,53 @@ footer{
     transition: 0.3s;
     cursor: pointer;
 }
-.center .content .fas:hover{
+
+.center .content .fas:hover {
     background: #f12020;
 }
-.center .content .text{
+
+.center .content .text {
     font-size: 1.0625rem;
     font-weight: 500;
     padding-left: 10px;
 }
-.center .content .phone{
+
+.center .content .phone {
     margin: 15px 0;
 }
-.right form .text{
+
+.right form .text {
     font-size: 1.0625rem;
     margin-bottom: 2px;
     color: #656565;
 }
-.right form .msg{
+
+.right form .msg {
     margin-top: 10px;
 }
-.right form input, .right form .msgForm{
+
+.right form input, .right form .msgForm {
     width: 100%;
     font-size: 1.0625rem;
     background: #151515;
     padding-left: 10px;
     border: 1px solid #222222;
 }
+
 .right form input:focus,
-.right form .msgForm:focus{
+.right form .msgForm:focus {
     outline-color: #3498db;
 }
-.right form input{
+
+.right form input {
     height: 35px;
 }
-.right form .btn{
+
+.right form .btn {
     margin-top: 10px;
 }
-.right form .btn button{
+
+.right form .btn button {
     height: 40px;
     width: 100%;
     border: none;
@@ -233,34 +261,42 @@ footer{
     cursor: pointer;
     transition: .3s;
 }
-.right form .btn button:hover{
+
+.right form .btn button:hover {
     background: #000;
 }
-.bottom center{
+
+.bottom center {
     padding: 5px;
     font-size: 0.9375rem;
     background: #151515;
 }
-.bottom center span{
+
+.bottom center span {
     color: #656565;
 }
-.bottom center a{
+
+.bottom center a {
     color: #f12020;
     text-decoration: none;
 }
-.bottom center a:hover{
+
+.bottom center a:hover {
     text-decoration: underline;
 }
+
 @media screen and (max-width: 900px) {
-    footer{
+    footer {
         position: relative;
         bottom: 0px;
     }
-    .main-content{
+
+    .main-content {
         flex-wrap: wrap;
         flex-direction: column;
     }
-    .main-content .box{
+
+    .main-content .box {
         margin: 5px 0;
     }
 }

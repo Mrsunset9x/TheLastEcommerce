@@ -133,7 +133,7 @@
         </div>
         <main class="py-4">
             <router-view @loggedIn="change"></router-view>
-            <Footer></Footer>
+
         </main>
     </div>
 </template>

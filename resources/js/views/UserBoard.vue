@@ -13,11 +13,11 @@
                             <img :src="`/uploads/products/avatar/`+prd.image" :alt="prd.name">
 
                             <h5><span v-html="prd.name"></span><br>
-                                <span class="small-text text-muted">{{prd.price}}</span>
+                                <span class="small-text text-muted">unit Price :{{prd.price}}</span>
                             </h5>
                             <hr>
 <!--                            <span class="small-text text-muted">Quantity: {{order.quantity}}-->
-                                <span class="float-right">{{order.order_status == 1? "shipped!" : "not shipped"}}</span>
+                                <span class="float-right">{{order.order_status == 1? "Shipped!" : "Not yet shipped"}}</span>
 <!--                            </span>-->
                             <br><br>
                             </div>
@@ -44,6 +44,7 @@
 
             this.$axios.get(`api/v1/user/${this.user.id}/order`)
             .then(response => {
+                console.log(response);
                 this.orders = response.data
             })
             .catch(error => {

@@ -47,6 +47,7 @@ export default {
             user: {
                 email: '',
                 password: '',
+                levels:0
             },
         }
     },
@@ -57,10 +58,8 @@ export default {
             if (this.user.password.length > 0) {
                 this.$axios.post('http://localhost:8000/api/v1/login', this.user)
                     .then(response => {
-                        console.log('abc');
                         if (response.data.code === 200) {
                             const level = response.data.user.level
-                           this.$bus.emit('level',level);
                             localStorage.setItem('jwt', response.data.jwt)
                             localStorage.setItem('user', JSON.stringify(response.data.user))
 
@@ -72,6 +71,7 @@ export default {
                                     if (level === 1) {
                                         this.$router.push({name: 'admin'})
                                     } else {
+                                        this.$bus.emit('level',this.levels);
                                         this.$router.push('/dashboard')
                                     }
                                 }

@@ -117,11 +117,11 @@
                 </div>
             </div>
         </div>
-        <footer></footer>
+        <Footer></Footer>
     </div>
 </template>
 <script>
-import footer from './Footer.vue';
+import Footer from './Footer.vue';
 export default {
     created() {
         this.openFullScreen2();
@@ -137,7 +137,7 @@ export default {
         })
     },
     components:{
-      footer
+        Footer
     },
     data() {
         return {

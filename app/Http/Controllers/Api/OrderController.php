@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\OrderProduct;
 use Illuminate\Http\Request;
 use App\Services\OrderService;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -80,11 +82,44 @@ class OrderController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
-        //
+        $data = [];
+
+        $data['user_id'] = Auth::guard()->user()->id;
+        if(!empty($request->coupon_id))
+        {
+            $coupon_id = Coupon::where('coupon_code',$request->coupon_id)->first();
+            $data['coupon_id'] = $coupon_id->id;
+        }
+        $data['name'] = $request->name;
+        $data['mobile'] = $request->mobile;
+        $data['address'] = $request->address;
+        $data['shipping_charges'] = $request->shipping_charges;
+        $order = Order::create($data);
+        $order_id = $order->id;
+
+        $orderdetails = OrderProduct::create([
+            'order_id' => $order_id,
+            'user_id' => Auth::guard()->user()->id,
+            'product_id'=>$request->product_id,
+            'quantity' =>$request->quantity,
+        ]);
+//        foreach (Cart::content() as $key => $cart) {
+//            $orderdetail['order_id'] = $order_id;
+//            $orderdetail['user_id'] = Auth::guard()->user()->id;
+//            $orderdetail['product_id'] = $cart->id;
+//            $orderdetail['product_price'] = $cart->price;
+//            $orderdetail['quantity'] = $cart->qty;
+//            $orderdetails[$key] = OrderProduct::create($orderdetail);
+//        }
+
+        return response()->json([
+            'status'    => true,
+            'orderDetail' => $orderdetails
+        ]);
     }
 
     /**
