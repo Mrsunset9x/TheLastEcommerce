@@ -74,7 +74,7 @@ class CouponController extends Controller
             $category = $this->couponService->find($id);
             return response()->json([
                 'status'    => true,
-                'category'    =>$category
+                'coupon'    =>$category
             ]);
         }catch (\Exception $e)
         {

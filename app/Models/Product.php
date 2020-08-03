@@ -27,4 +27,9 @@ class Product extends Model
     {
         return $this->belongsToMany(Category::class);
     }
+
+    public function reports()
+    {
+        return $this->hasMany(UserReport::class);
+    }
 }

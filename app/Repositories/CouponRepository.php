@@ -19,7 +19,7 @@ class CouponRepository extends AbstractRepository implements ICouponRepository
         if ($query) {
             $query->orderBy($request['column'], $request['sort']);
         }
-        return $query->where('status', 1)->paginate($limit);
+        return $query->paginate($limit);
     }
 
     public function create($attributes, int $id = null)
@@ -31,7 +31,6 @@ class CouponRepository extends AbstractRepository implements ICouponRepository
         [
             'coupon_code' => $attributes['coupon_code'],
             'amount'      => $attributes['amount'],
-            'amount_type' => $attributes['amount_type'],
             'expiry_date' => $attributes['expiry_date'],
             'status'      => $attributes['status']
         ]);

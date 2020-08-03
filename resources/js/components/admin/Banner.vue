@@ -150,10 +150,8 @@ export default {
             })
         },
         pushData() {
-            console.log('in update');
             this.$axios.put(`/api/v1/banner/${this.bannerForm.id}`, this.bannerForm)
                 .then((response) => {
-                    console.log(response);
                     this.drawer = false;
                     if (response.status === 200) {
                         this.getBanner();
@@ -164,10 +162,8 @@ export default {
                 });
         },
         storebanner() {
-            console.log('in create');
             this.$axios.post(`/api/v1/banner/`, this.bannerForm)
                 .then((res) => {
-                    console.log(res);
                     if (res.status === 200) {
                         this.$forceUpdate();
                         this.getBanner();
@@ -188,10 +184,8 @@ export default {
         },
 
         handleEdit(id) {
-            console.log(id);
             this.$axios.get(`api/v1/banner/${id}`)
                 .then((res) => {
-                    console.log(res.data.banner.id);
                     if (res.status === 200) {
                         this.drawer = true;
                         this.bannerForm = res.data.banner;
@@ -206,7 +200,6 @@ export default {
         handleDelete(id) {
             this.$axios.delete(`api/v1/banner/${id}`)
                 .then((res) => {
-                    console.log(res);
                     if (res.status === 200) {
                         this.notification()
                         this.getBanner()

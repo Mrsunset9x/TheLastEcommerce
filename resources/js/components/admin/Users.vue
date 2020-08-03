@@ -80,6 +80,7 @@
                 let use = this.users[index]
                 this.$axios.delete(`/api/v1/user/${use.id}`)
                 .then(res =>{
+                    this.Deletenotification()
                     this.getUser();
                 }).catch(errors =>{
                     console.log(errors);
@@ -88,6 +89,13 @@
             changePage(page) {
                 this.currentPage = page;
                 this.getUser();
+            },
+            Deletenotification() {
+                const h = this.$createElement;
+                this.$notify({
+                    title: 'Thông Báo !',
+                    message: h('i', { style: 'color: blue'}, 'Xoá thành công')
+                });
             },
         }
     }

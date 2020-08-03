@@ -61,7 +61,8 @@
                                 <div class="text">
                                     Message *
                                 </div>
-                                <textarea id=".msgForm" rows="2" cols="25" required></textarea>
+                                <input type="text" required>
+<!--                                <textarea id=".msgForm" rows="2" cols="25" required></textarea>-->
                                 <br/>
                                 <div class="btn">
                                     <button type="submit">Send</button>
@@ -85,7 +86,6 @@ export default {
     name: "Footer",
     data() {
         return {
-            allThe: '',
         }
     },
 

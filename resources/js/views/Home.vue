@@ -38,7 +38,7 @@
         <div class="container">
             <div class="row mt-5 mb-5">
                 <div class="col-md-12">
-                    <h1 class="text-center">FEATURED PRODUCTS</h1>
+                    <h1 id="somewhere0" class="text-center">FEATURED PRODUCTS</h1>
                 </div>
             </div>
         </div>
@@ -61,7 +61,13 @@
                     </div>
                 </div>
             </div>
+            <div style="margin-left: 50%">
+                      <router-link :to="{ path: '/category/0', query: { myprop: 0 }}">
+                          <h3> Xem Thêm <i class="fa fa-angle-right" aria-hidden="true"></i></h3>
+                      </router-link>
+            </div>
         </div>
+        <hr>
         <div class="container">
             <div class="row mt-5 mb-5">
                 <div class="col-md-12">
@@ -82,10 +88,14 @@
                                 </h5>
                                 <button class="col-md-4 btn btn-sm btn-primary float-left">Buy Now</button>
                             </router-link>
-                            <button class="col-md-2 btn btn-sm btn-danger float-right"><i class="fa fa-cart-arrow-down"
-                                                                                          aria-hidden="true"></i>
+                            <button class="col-md-2 btn btn-sm btn-danger float-right"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
                             </button>
                         </div>
+                    </div>
+                    <div style="margin-left: 50%">
+                        <router-link :to="{ path: '/category/1', query: { myprop: 1 }}">
+                            <h3> Xem Thêm <i class="fa fa-angle-right" aria-hidden="true"></i></h3>
+                        </router-link>
                     </div>
                 </div>
             </div>
@@ -111,6 +121,11 @@
                                 <button class="col-md-4 btn btn-sm btn-primary float-left">Buy Now</button>
                                 <button class="col-md-2 btn btn-sm btn-danger float-right"><i
                                     class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
+                            </router-link>
+                        </div>
+                        <div style="margin-left: 50%">
+                            <router-link :to="{ path: '/category/2', query: { myprop: 2 }}">
+                                <h3 > Xem Thêm <i class="fa fa-angle-right" aria-hidden="true"></i></h3>
                             </router-link>
                         </div>
                     </div>
@@ -148,12 +163,14 @@ export default {
             totalRecord: 0,
             currentPage: 1,
             sort: 'column=id&sort=desc',
+            pbCategory:'',
         }
     },
 
     mounted() {
 
         this.$axios.get(`api/v1/product?page=${this.currentPage}&${this.sort}`).then((res) => {
+            console.log(res);
             if (res.status === 200) {
                 this.products = res.data.product;
             }
@@ -172,7 +189,7 @@ export default {
             });
             setTimeout(() => {
                 loading.close();
-            }, 2000);
+            }, 1000);
         },
         addcart(product) {
             this.$axios.get(`/cart/${product.id}`)
@@ -180,8 +197,7 @@ export default {
                     console.log(res.data.total, res.data);
                     this.$emit('adcart',this.res.data.total)
                 })
-        }
-
+        },
     }
 }
 </script>

@@ -1,12 +1,13 @@
 <template>
     <div class="container">
+            <h2 style="margin-left: 45% ; color: green"><b>Check Out </b></h2>
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <div class="order-box" v-for=" prd in product ">
                     <img :src="'/uploads/products/avatar/'+prd.image" :alt="prd.name" style=" max-width: 70px ">
                     <h2 class="title" v-html="prd.name"></h2>
-                    <p class="small-text text-muted float-left">$ {{prd.price}}</p>
-                    <p class="small-text text-muted float-right">Available Units: {{prd.units}}</p>
+                    <p class="small-text text-muted float-left">$ {{ prd.price }}</p>
+                    <p class="small-text text-muted float-right">Available Units: {{ prd.units }}</p>
                     <br>
                     <hr>
                     <label class="row"><span class="col-md-2 float-left">Quantity: </span><input type="number"
@@ -61,7 +62,7 @@ export default {
             quantity: 1,
             isLoggedIn: null,
             product: [],
-            productId:''
+            productId: ''
         }
     },
     mounted() {
@@ -90,7 +91,7 @@ export default {
             this.$router.push({name: 'register', params: {nextUrl: this.$route.fullPath}})
         },
         placeOrder(e) {
-            $.each(this.product,(key,value)=>{
+            $.each(this.product, (key, value) => {
                 this.productId = value.id;
             })
             e.preventDefault()

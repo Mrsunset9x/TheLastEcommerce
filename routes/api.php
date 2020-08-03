@@ -22,6 +22,10 @@ Route::namespace('api')->prefix('v1')->group(function(){
     Route::get('/product/{id}', 'ProductController@show');
     Route::get('/banner/', 'BannerController@index');
     Route::get('/category','CategoryController@index');
+    //ReportUser
+    Route::get('reportuser','ReportController@index');
+    Route::post('/reportuser/{id}','ReportController@show');
+
     Route::middleware('api.auth')->group(function() {
         //Auth
         Route::post('me','AuthController@me');
@@ -44,6 +48,10 @@ Route::namespace('api')->prefix('v1')->group(function(){
 
         //Counpon
         Route::resource('coupon','CouponController')->except('create','edit');
+
+        //report
+        Route::post('reportuser/{id}','ReportController@store');
+
 
 
         //products
