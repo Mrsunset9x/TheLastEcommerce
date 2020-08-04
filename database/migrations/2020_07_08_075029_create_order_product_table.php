@@ -18,6 +18,7 @@ class CreateOrderProductTable extends Migration
             $table->bigInteger('order_id');
             $table->bigInteger('user_id');
             $table->bigInteger('product_id');
+            $table->integer('price');
             $table->integer('quantity');
             $table->timestamps();
         });

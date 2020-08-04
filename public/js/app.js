@@ -4128,16 +4128,20 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    var _this = this;
-
-    this.$axios.get("/api/v1/order/?page=".concat(this.currentPage, "&").concat(this.sort)).then(function (response) {
-      console.log(response);
-      _this.orders = response.data.order;
-    })["catch"](function (error) {
-      console.error(error);
-    });
+    this.getAll();
   },
   methods: {
+    getAll: function getAll() {
+      var _this = this;
+
+      this.$axios.get("/api/v1/order/?page=".concat(this.currentPage, "&").concat(this.sort)).then(function (response) {
+        console.log(response);
+        _this.orders = response.data.order;
+        _this.totalRecord = response.data.meta.total;
+      })["catch"](function (error) {
+        console.error(error);
+      });
+    },
     deliver: function deliver(index) {
       var _this2 = this;
 
@@ -4152,7 +4156,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     changePage: function changePage(page) {
       this.currentPage = page;
-      this.getBanner();
+      this.getAll();
     }
   }
 });
@@ -5134,28 +5138,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['pid'],
   data: function data() {
     return {
+      product: [],
       address: "",
       name: "",
       phone: "",
+      price: "",
+      coupon: '',
       quantity: 1,
-      isLoggedIn: null,
-      product: [],
-      productId: ''
+      productId: '',
+      totalprice: '',
+      isLoggedIn: null
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
     this.isLoggedIn = localStorage.getItem('jwt') != null;
+    $.each(this.product, function (key, value) {
+      _this.price = value.price;
+    });
   },
   beforeMount: function beforeMount() {
-    var _this = this;
+    var _this2 = this;
 
     this.$axios.get("/api/v1/product/".concat(this.pid)).then(function (response) {
       console.log(response);
-      _this.product = response.data.product.products;
+      _this2.product = response.data.product.products;
     })["catch"](function (error) {
       console.error(error);
     });
@@ -5184,21 +5198,22 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     placeOrder: function placeOrder(e) {
-      var _this2 = this;
+      var _this3 = this;
 
       $.each(this.product, function (key, value) {
-        _this2.productId = value.id;
+        _this3.productId = value.id;
       });
       e.preventDefault();
       console.log(this.product);
       this.$axios.post('api/v1/order', {
         address: this.address,
         quantity: this.quantity,
+        coupon: this.coupon,
         product_id: this.productId,
         name: this.name,
         mobile: this.phone
       }).then(function (response) {
-        _this2.$router.push('/confirmation');
+        _this3.$router.push('/confirmation');
       })["catch"](function (error) {
         console.error(error);
       });
@@ -5207,6 +5222,18 @@ __webpack_require__.r(__webpack_exports__);
       if (this.quantity > this.product.units) {
         this.quantity = this.product.units;
       }
+    },
+    amount: function amount(coupon) {
+      var _this4 = this;
+
+      this.$axios.post("api/v1/couponcode", {
+        'coupon': coupon
+      }).then(function (res) {
+        console.log(res.data.amount);
+        _this4.totalprice = res.data.amount;
+      })["catch"](function (errors) {
+        console.log(errors);
+      });
     }
   }
 });
@@ -6054,6 +6081,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -6097,7 +6125,8 @@ __webpack_require__.r(__webpack_exports__);
     })["catch"](function (error) {
       console.error(error);
     });
-    this.$axios.post("api/v1/reportuser/".concat(this.$route.params.id)).then(function (res) {
+    this.$axios.post("api/v1/reportusers/".concat(this.$route.params.id)).then(function (res) {
+      console.log(res);
       _this.reports = res.data.report;
     });
   },
@@ -68917,7 +68946,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(order.price))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(order.price * order.quantity))]),
+              _c("td", [
+                _vm._v(_vm._s(order.totalprc < 0 ? "0" : order.totalprc))
+              ]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(order.ordStt === 1 ? "Yes" : "No"))]),
               _vm._v(" "),
@@ -70597,6 +70628,15 @@ var render = function() {
                     }
                   }
                 })
+              ]),
+              _vm._v(" "),
+              _c("span", { staticStyle: { "margin-right": "30%" } }, [
+                _c("h3", [
+                  _vm._v(
+                    "Tổng Tiền : " +
+                      _vm._s(prd.price * _vm.quantity - _vm.totalprice)
+                  )
+                ])
               ])
             ])
           }),
@@ -70631,6 +70671,42 @@ var render = function() {
             _vm.isLoggedIn
               ? _c("div", [
                   _c("div", { staticClass: "row" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col-md-3 col-form-label",
+                        attrs: { for: "Coupon" }
+                      },
+                      [_vm._v("Code Coupon")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-9" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.coupon,
+                            expression: "coupon"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { id: "Coupon", type: "text", required: "" },
+                        domProps: { value: _vm.coupon },
+                        on: {
+                          change: function($event) {
+                            return _vm.amount(_vm.coupon)
+                          },
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.coupon = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
                     _c(
                       "label",
                       {
@@ -72380,36 +72456,61 @@ var render = function() {
               _vm._v(" "),
               _vm._l(_vm.reports, function(report) {
                 return _c("div", { staticClass: "row" }, [
-                  _vm._m(5, true),
+                  _c("div", { staticClass: "col-md-2" }, [
+                    _c("img", {
+                      staticClass: "img img-rounded img-fluid",
+                      attrs: { src: "https://image.ibb.co/jw55Ex/def_face.jpg" }
+                    }),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "text-secondary text-center" }, [
+                      _vm._v(_vm._s(report.created_at))
+                    ])
+                  ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-10" }, [
-                    _c("p", [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "float-left",
+                    _c(
+                      "p",
+                      [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "float-left",
+                            attrs: {
+                              href:
+                                "https://maniruzzaman-akash.blogspot.com/p/contact.html"
+                            }
+                          },
+                          [_c("strong", [_vm._v(_vm._s(report.name))])]
+                        ),
+                        _vm._v(" "),
+                        _c("el-rate", {
                           attrs: {
-                            href:
-                              "https://maniruzzaman-akash.blogspot.com/p/contact.html"
+                            texts: [
+                              "oops",
+                              "disappointed",
+                              "normal",
+                              "good",
+                              "great"
+                            ],
+                            "show-text": ""
+                          },
+                          model: {
+                            value: report.vote,
+                            callback: function($$v) {
+                              _vm.$set(report, "vote", $$v)
+                            },
+                            expression: "report.vote"
                           }
-                        },
-                        [_c("strong", [_vm._v(_vm._s(report.name))])]
-                      ),
-                      _vm._v(" "),
-                      _vm._m(6, true),
-                      _vm._v(" "),
-                      _vm._m(7, true),
-                      _vm._v(" "),
-                      _vm._m(8, true),
-                      _vm._v(" "),
-                      _vm._m(9, true)
-                    ]),
+                        })
+                      ],
+                      1
+                    ),
                     _vm._v(" "),
                     _c("div", { staticClass: "clearfix" }),
                     _vm._v(" "),
                     _c("p", [_vm._v(_vm._s(report.content))]),
                     _vm._v(" "),
-                    _vm._m(10, true)
+                    _vm._m(5, true)
                   ])
                 ])
               })
@@ -72461,53 +72562,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("h2", [_c("b", [_vm._v("You need to login to Comment !!")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-2" }, [
-      _c("img", {
-        staticClass: "img img-rounded img-fluid",
-        attrs: { src: "https://image.ibb.co/jw55Ex/def_face.jpg" }
-      }),
-      _vm._v(" "),
-      _c("p", { staticClass: "text-secondary text-center" }, [
-        _vm._v("15 Minutes Ago")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "float-right" }, [
-      _c("i", { staticClass: "text-warning fa fa-star" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "float-right" }, [
-      _c("i", { staticClass: "text-warning fa fa-star" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "float-right" }, [
-      _c("i", { staticClass: "text-warning fa fa-star" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "float-right" }, [
-      _c("i", { staticClass: "text-warning fa fa-star" })
-    ])
   },
   function() {
     var _vm = this

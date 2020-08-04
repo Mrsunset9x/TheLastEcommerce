@@ -21,7 +21,7 @@
                 <td>{{ order.name }}</td>
                 <td>{{ order.quantity }}</td>
                 <td>{{ order.price }}</td>
-                <td>{{ order.price * order.quantity }}</td>
+                <td>{{ order.totalprc < 0 ? "0" : order.totalprc }}</td>
                 <td>{{ order.ordStt === 1? "Yes" : "No"}}</td>
                 <td v-if=" order.ordStt === 0" ><button class="btn btn-success" @click="deliver(index)">Deliver Now ?</button></td>
             </tr>
@@ -48,16 +48,21 @@
             }
         },
         created() {
-            this.$axios.get(`/api/v1/order/?page=${this.currentPage}&${this.sort}`)
-                .then(response => {
-                    console.log(response);
-                    this.orders = response.data.order;
-                })
-                .catch(error => {
-                    console.error(error);
-                })
+            this.getAll();
         },
         methods: {
+            getAll()
+            {
+                this.$axios.get(`/api/v1/order/?page=${this.currentPage}&${this.sort}`)
+                    .then(response => {
+                        console.log(response);
+                        this.orders = response.data.order;
+                        this.totalRecord = response.data.meta.total;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    })
+            },
             deliver(index) {
                 let order = this.orders[index]
                 this.$axios.patch(`/api/v1/orders/${order.ordId}/deliver`)
@@ -71,7 +76,7 @@
             },
             changePage(page) {
                 this.currentPage = page;
-                this.getBanner();
+                this.getAll();
             },
         }
 

@@ -22,9 +22,10 @@ Route::namespace('api')->prefix('v1')->group(function(){
     Route::get('/product/{id}', 'ProductController@show');
     Route::get('/banner/', 'BannerController@index');
     Route::get('/category','CategoryController@index');
+    Route::post('/couponcode','OrderController@ChangeCoupon');
     //ReportUser
     Route::get('reportuser','ReportController@index');
-    Route::post('/reportuser/{id}','ReportController@show');
+    Route::post('/reportusers/{id}','ReportController@show');
 
     Route::middleware('api.auth')->group(function() {
         //Auth

@@ -22,7 +22,7 @@ class OrderRepository extends AbstractRepository implements IOrderRepository
 //        return $query->get();
        return OrderProduct::join('products','products.id','order_product.product_id')
            ->join('orders','orders.id','order_product.order_id')
-           ->select('orders.id as ordId','orders.name as usrName','orders.address as usrAddress','orders.order_status as ordStt','products.*','order_product.quantity')
-           ->get();
+           ->select('orders.id as ordId','orders.name as usrName','orders.address as usrAddress','orders.order_status as ordStt','products.*','order_product.quantity','order_product.price as totalprc')
+           ->paginate($limit);
     }
 }

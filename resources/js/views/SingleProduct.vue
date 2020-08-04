@@ -108,17 +108,18 @@
                         <div class="row" v-for="report in reports">
                             <div class="col-md-2">
                                 <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid"/>
-                                <p class="text-secondary text-center">15 Minutes Ago</p>
+                                <p class="text-secondary text-center">{{ report.created_at }}</p>
                             </div>
                             <div class="col-md-10">
                                 <p>
                                     <a class="float-left" href="https://maniruzzaman-akash.blogspot.com/p/contact.html"><strong>{{
                                             report.name
                                         }}</strong></a>
-                                    <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                                    <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                                    <span class="float-right"><i class="text-warning fa fa-star"></i></span>
-                                    <span class="float-right"><i class="text-warning fa fa-star"></i></span>
+                                    <el-rate
+                                        v-model="report.vote"
+                                        :texts="['oops', 'disappointed', 'normal', 'good', 'great']"
+                                        show-text>
+                                    </el-rate>
 
                                 </p>
                                 <div class="clearfix"></div>
@@ -184,8 +185,9 @@ export default {
             .catch(error => {
                 console.error(error);
             })
-        this.$axios.post(`api/v1/reportuser/${this.$route.params.id}`)
+        this.$axios.post(`api/v1/reportusers/${this.$route.params.id}`)
             .then((res) => {
+                console.log(res);
                 this.reports = res.data.report;
             })
     },

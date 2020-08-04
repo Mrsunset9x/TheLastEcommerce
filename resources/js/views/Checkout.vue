@@ -10,12 +10,10 @@
                     <p class="small-text text-muted float-right">Available Units: {{ prd.units }}</p>
                     <br>
                     <hr>
-                    <label class="row"><span class="col-md-2 float-left">Quantity: </span><input type="number"
-                                                                                                 name="units" min="1"
-                                                                                                 :max="prd.units"
-                                                                                                 class="col-md-2 float-left"
-                                                                                                 v-model="quantity"
-                                                                                                 @change="checkUnits"></label>
+                    <label class="row"><span class="col-md-2 float-left">Quantity: </span><input type="number" name="units" min="1" :max="prd.units"
+                                                                                                 class="col-md-2 float-left" v-model="quantity" @change="checkUnits"></label>
+
+                    <span style="margin-right: 30%"><h3>Tổng Tiền : {{ prd.price * quantity - totalprice }}</h3></span>
                 </div>
                 <br>
                 <div>
@@ -26,6 +24,10 @@
                     </div>
                     <div v-if="isLoggedIn">
                         <div class="row">
+                            <label for="Coupon" class="col-md-3 col-form-label">Code Coupon</label>
+                            <div class="col-md-9">
+                                <input id="Coupon" type="text" class="form-control" @change="amount(coupon)" v-model="coupon" required>
+                            </div>
                             <label for="Name" class="col-md-3 col-form-label">Name of the consignee</label>
                             <div class="col-md-9">
                                 <input id="Name" type="text" class="form-control" v-model="name" required>
@@ -56,17 +58,23 @@ export default {
     props: ['pid'],
     data() {
         return {
+            product: [],
             address: "",
             name: "",
             phone: "",
+            price:"",
+            coupon:'',
             quantity: 1,
+            productId: '',
+            totalprice:'',
             isLoggedIn: null,
-            product: [],
-            productId: ''
         }
     },
     mounted() {
         this.isLoggedIn = localStorage.getItem('jwt') != null
+        $.each(this.product,(key,value)=>{
+            this.price = value.price;
+        })
     },
     beforeMount() {
         this.$axios.get(`/api/v1/product/${this.pid}`)
@@ -96,9 +104,11 @@ export default {
             })
             e.preventDefault()
             console.log(this.product);
+
             this.$axios.post('api/v1/order', {
                 address: this.address,
                 quantity: this.quantity,
+                coupon:this.coupon,
                 product_id: this.productId,
                 name: this.name,
                 mobile: this.phone
@@ -114,6 +124,18 @@ export default {
             if (this.quantity > this.product.units) {
                 this.quantity = this.product.units
             }
+        },
+        amount(coupon)
+        {
+            this.$axios.post(`api/v1/couponcode`,{
+                'coupon' : coupon
+            })
+            .then((res)=>{
+                console.log(res.data.amount);
+                this.totalprice = res.data.amount;
+            }).catch((errors)=>{
+                console.log(errors);
+            })
         }
     }
 }
